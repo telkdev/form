@@ -22,7 +22,7 @@
         type="text"
         class="form-control input-large"
         id="numberValidationCode"
-        placeholder="123456"
+        placeholder="+380998877118"
         autocomplete="off"
       />
 
@@ -45,7 +45,7 @@
         type="password"
         class="form-control input-large"
         id="password"
-        placeholder="123456"
+        placeholder="some-random-password"
         autocomplete="off"
       />
 
@@ -79,17 +79,17 @@ export default {
   props: {
     isFirstStep: {
       type: Boolean,
-      requierd: true,
+      required: true,
     },
     isLastStep: {
       type: Boolean,
-      requierd: true,
+      required: true,
     },
   },
   data() {
     return {
-      phoneNumber: null,
-      password: null,
+      phoneNumber: localStorage.getItem("phoneNumber"),
+      password: localStorage.getItem("password"),
     };
   },
   methods: {

@@ -41,7 +41,7 @@
       <label for="apiHash">App api_hash: </label>
       <input
         v-model="apiHash"
-        type="text"
+        type="password"
         class="form-control input-large"
         id="apiHash"
         placeholder="12331231231233"
@@ -77,17 +77,17 @@ export default {
   props: {
     isFirstStep: {
       type: Boolean,
-      requierd: true,
+      required: true,
     },
     isLastStep: {
       type: Boolean,
-      requierd: true,
+      required: true,
     },
   },
   data() {
     return {
-      apiId: null,
-      apiHash: null,
+      apiId: localStorage.getItem("apiId"),
+      apiHash: localStorage.getItem("apiHash"),
     };
   },
   methods: {

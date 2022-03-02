@@ -53,22 +53,25 @@ export default {
       currentStep: 0,
       totalSteps: 2,
       session: null,
-
-      // User data
       apiId: null,
-      apiHash: null,
-      phoneNumber: null,
-      password: null,
+      apiHash: localStorage.getItem("apiHash"),
+      phoneNumber: localStorage.getItem("phoneNumber"),
+      password: localStorage.getItem("password"),
+
       verificationCode: null,
     };
   },
   computed: {
+  
     isFirstStep() {
       return this.currentStep === 0;
     },
     isLastStep() {
       return this.currentStep === this.totalSteps;
     },
+  },
+  mounted() {
+    // this.apiId = localStorage.getItem("apiId");
   },
   methods: {
     incrementStep() {
@@ -83,11 +86,17 @@ export default {
     setApiData(payload) {
       this.apiId = payload.apiId;
       this.apiHash = payload.apiHash;
+
+      localStorage.setItem("apiId", payload.apiId);
+      localStorage.setItem("apiHash", payload.apiHash);
     },
 
     async setPhoneData(payload) {
       this.phoneNumber = payload.phoneNumber;
       this.password = payload.password;
+
+      localStorage.setItem("phoneNumber", payload.phoneNumber);
+      localStorage.setItem("password", payload.password);
 
       await this.sendAuthRequest();
     },
