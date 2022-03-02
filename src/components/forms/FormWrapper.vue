@@ -33,6 +33,8 @@ import ApiDataForm from "@/components/forms/ApiDataForm.vue";
 import PhoneNumberForm from "@/components/forms/PhoneNumberForm.vue";
 import PhoneCodeForm from "@/components/forms/PhoneCodeForm.vue";
 
+import {authRequest} from "@/api/auth";
+
 const { Api, TelegramClient } = require("telegram");
 const { StringSession } = require("telegram/sessions");
 
@@ -54,6 +56,7 @@ export default {
       apiId: null,
       apiHash: null,
       phoneNumber: null,
+      password: null,
     };
   },
   computed: {
@@ -81,6 +84,18 @@ export default {
 
     setPhoneData(payload) {
       this.phoneNumber = payload.phoneNumber;
+      this.password = payload.password;
+
+      this.sendAuthRequest();
+    },
+
+    async sendAuthRequest() {
+      const user = await authRequest({
+        login: this.phoneNumber,
+        password: this.password,
+      });
+
+      console.log(user);
     },
 
     // TODO: check how to save session, so we don't need to login second time;

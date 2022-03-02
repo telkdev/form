@@ -100,6 +100,7 @@ export default {
       };
 
       this.$emit("increment-step");
+
       this.$emit("send-phone-data", payload);
     },
     handleCancel() {
