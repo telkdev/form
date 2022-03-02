@@ -34,7 +34,7 @@ import ApiDataForm from "@/components/forms/ApiDataForm.vue";
 import PhoneNumberForm from "@/components/forms/PhoneNumberForm.vue";
 import PhoneCodeForm from "@/components/forms/PhoneCodeForm.vue";
 
-import { authRequest } from "@/api/auth";
+import { authRequest } from "@/api/endpoints";
 
 export default {
   name: "FormWrapper",
