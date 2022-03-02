@@ -13,7 +13,7 @@
       key="apiId"
       name="api Id"
       v-slot="{ errors }"
-      rules="required"
+      rules="required|min:5"
     >
       <label for="apiId">App api_id: </label>
       <input
@@ -36,7 +36,7 @@
       key="apiHash"
       name="apiHash"
       v-slot="{ errors }"
-      rules="required"
+      rules="required|min:15"
     >
       <label for="apiHash">App api_hash: </label>
       <input
