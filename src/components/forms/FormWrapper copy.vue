@@ -36,6 +36,9 @@ import PhoneCodeForm from "@/components/forms/PhoneCodeForm.vue";
 
 import { authRequest } from "@/api/auth";
 
+const { Api, TelegramClient } = require("telegram");
+const { StringSession } = require("telegram/sessions");
+
 export default {
   name: "FormWrapper",
   components: {
@@ -46,14 +49,14 @@ export default {
   },
   data() {
     return {
-      currentStep: 0,
+      currentStep: 1,
       totalSteps: 2,
       session: null,
 
       // User data
-      apiId: null,
-      apiHash: null,
-      phoneNumber: null,
+      apiId: 17353630,
+      apiHash: '3e7fc31a750f061db266e828c82e7ce5',
+      phoneNumber: '+380953364145',
       password: null,
       verificationCode: null,
     };
@@ -86,6 +89,8 @@ export default {
       this.password = payload.password;
 
       await this.sendAuthRequest();
+
+      await this.sendApiData();
     },
 
     async sendAuthRequest() {
@@ -101,72 +106,70 @@ export default {
       this.verificationCode = payload.verificationCode;
     },
 
-    // Temporary disabled
     // While we reach to this method call we already wil be on a 2 step(last one), where we can easily wait for a verification code;
-    // async getVerificationCode() {
-    //   console.log(this.verificationCode);
+    async getVerificationCode() {
+      console.log(this.verificationCode);
 
-    //   while (!this.verificationCode) {
-    //     await this.wait(3);
-    //   }
+      while (!this.verificationCode) {
+        await this.wait(3);
+      }
 
-    //   return this.verificationCode;
-    // },
+      return this.verificationCode;
+    },
 
-    // async wait(seconds) {
-    //   return new Promise((res) => {
-    //     setTimeout(() => {
-    //       res();
-    //     }, seconds * 1000);
-    //   });
-    // },
+   async wait(seconds) {
+      return new Promise((res) => {
+        setTimeout(() => {
+          res();
+        }, seconds * 1000);
+      });
+    },
 
     // TODO: check how to save session, so we don't need to login second time;
     // TODO: send data via form, not prompt
-    // async sendApiData() {
-    //   const session = this.session || new StringSession(""); // You should put your string session here
-    //   const apiId = +this.apiId;
-    //   const apiHash = this.apiHash;
+    async sendApiData() {
+      const session = this.session || new StringSession(""); // You should put your string session here
+      const apiId = +this.apiId;
+      const apiHash = this.apiHash;
 
-    //   (async () => {
-    //     const client = new TelegramClient(session, apiId, apiHash, {
-    //       connectionRetries: 5,
-    //     });
+      (async () => {
+        const client = new TelegramClient(session, apiId, apiHash, {
+          connectionRetries: 5,
+        });
 
-    //     await client.connect();
+        await client.connect();
 
-    //     // If not logged in
-    //     if (!(await client.checkAuthorization())) {
-    //       await client.start({
-    //         //? password: ,
-    //         phoneNumber: () => this.phoneNumber,
-    //         phoneCode: async () =>
-    //           await prompt("Please, enter verification code from telegram"),
+        // If not logged in
+        if (!(await client.checkAuthorization())) {
+          await client.start({
+            //? password: ,
+            phoneNumber: this.phoneNumber,
+            phoneCode: this.getVerificationCode(),
 
-    //         onError: (err) => console.log(err),
-    //       });
+            onError: (err) => console.log(err),
+          });
 
-    //       console.log("You should now be connected.");
-    //       // Save this string to avoid logging in again
-    //       this.session = client.session.save();
-    //     }
+          console.log("You should now be connected.");
+          // Save this string to avoid logging in again
+          this.session = client.session.save();
+        }
 
-    //     const telegramChannels = ["BeregTime", "lebedevalive"];
+        const telegramChannels = ["BeregTime", "lebedevalive"];
 
-    //     telegramChannels.forEach(async (dayn) => {
-    //       const result = await client.invoke(
-    //         new Api.account.ReportPeer({
-    //           peer: dayn,
-    //           reason: new Api.InputReportReasonSpam({}),
-    //           message:
-    //             "Propagand of Terrorism and violence against civil people.",
-    //         })
-    //       );
+        telegramChannels.forEach(async (dayn) => {
+          const result = await client.invoke(
+            new Api.account.ReportPeer({
+              peer: dayn,
+              reason: new Api.InputReportReasonSpam({}),
+              message:
+                "Propagand of Terrorism and violence against civil people.",
+            })
+          );
 
-    //       console.log(result); // prints the result
-    //     });
-    //   })();
-    // },
+          console.log(result); // prints the result
+        });
+      })();
+    },
   },
 };
 </script>

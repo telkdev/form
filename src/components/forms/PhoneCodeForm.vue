@@ -10,17 +10,17 @@
       class="form-field"
       tag="div"
       eager
-      key="numberValidationCode"
-      name="numberValidationCode"
+      key="verificationCode"
+      name="verificationCode"
       v-slot="{ errors }"
       rules="required"
     >
-      <label for="numberValidationCode">Enter verification code</label>
+      <label for="verificationCode">Enter verification code</label>
       <input
-        v-model="number"
+        v-model="verificationCode"
         type="text"
         class="form-control input-large"
-        id="numberValidationCode"
+        id="verificationCode"
         placeholder="123456"
         autocomplete="off"
       />
@@ -66,14 +66,18 @@ export default {
   },
   data() {
     return {
-      number: null,
+      verificationCode: null,
     };
   },
   methods: {
     handleSubmit() {
+       const payload = {
+        verificationCode: this.verificationCode,
+      };
+
       this.$emit("increment-step");
 
-      // TODO: send payload
+      this.$emit('send-verification-code-data', payload)
     },
     handleCancel() {
       this.$emit("decrement-step");
