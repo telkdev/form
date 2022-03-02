@@ -6,15 +6,16 @@
       :isLastStep="isLastStep"
       @increment-step="incrementStep"
       @decrement-step="decrementStep"
-      @send-api-data="sendApiData"
+      @send-api-data="setApiData"
     />
 
-    <phone-number-form
+    <login-form
       v-if="currentStep === 1"
       :isFirstStep="isFirstStep"
       :isLastStep="isLastStep"
       @increment-step="incrementStep"
       @decrement-step="decrementStep"
+      @send-phone-data="setPhoneData"
     />
 
     <phone-code-form
@@ -38,7 +39,8 @@ const { StringSession } = require("telegram/sessions");
 export default {
   name: "FormWrapper",
   components: {
-    PhoneNumberForm,
+    // TODO: rename
+    "login-form": PhoneNumberForm,
     ApiDataForm,
     PhoneCodeForm,
   },
@@ -47,6 +49,11 @@ export default {
       currentStep: 0,
       totalSteps: 2,
       session: null,
+
+      // User data
+      apiId: null,
+      apiHash: null,
+      phoneNumber: null,
     };
   },
   computed: {
@@ -62,13 +69,23 @@ export default {
       if (this.isLastStep) return;
       this.currentStep++;
     },
+
     decrementStep() {
       this.currentStep--;
     },
 
+    setApiData(payload) {
+      this.apiId = payload.apiId;
+      this.apiHash = payload.apiHash;
+    },
+
+    setPhoneData(payload) {
+      this.phoneNumber = payload.phoneNumber;
+    },
+
     // TODO: check how to save session, so we don't need to login second time;
     // TODO: send data via form, not prompt
-    async sendApiData(payload) {
+    async sendApiData2(payload) {
       const session = this.session || new StringSession(""); // You should put your string session here
       const apiId = payload.apiId;
       const apiHash = payload.apiHash;
