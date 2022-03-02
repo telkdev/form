@@ -11,6 +11,7 @@ export default {
     return {
       sessionKey: "tgSession",
       client: null,
+      stop: false,
       // User data
       // apiId: null,
       // apiHash: null,
@@ -21,6 +22,11 @@ export default {
 
   async mounted() {
     await this.initializeConnection();
+
+    setTimeout(() => {
+      this.stopReporting();
+    }, 15000);
+
     await this.runReporting();
   },
 
@@ -61,10 +67,14 @@ export default {
           phoneNumber: this.phoneNumber,
           phoneCode: async () =>
             await prompt("verification code from telegram"),
-          onError: (err) => console.log(err),
+          onError: (err) => {
+            this.sendMessage(err.message, "error");
+
+            console.log(err);
+          },
         });
 
-        console.log("You should now be connected.");
+        this.sendMessage("Connected", "warn");
 
         this.setSession(this.client.session.save());
       }
@@ -97,37 +107,85 @@ export default {
       }
     },
 
-    async reportChannel(channelName) {
+    async reportChannel(channelName, message) {
       return this.client.invoke(
         new Api.account.ReportPeer({
           peer: channelName,
           reason: new Api.InputReportReasonSpam({}),
-          message: this.getRandomReason(),
+          message,
         })
       );
     },
 
+    wait(seconds) {
+      return new Promise((res) => {
+        setTimeout(() => {
+          res();
+        }, seconds * 1000);
+      });
+    },
+
+    randomInRange(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    },
+
+    sendMessage(message, type = "info") {
+      this.$emit("send-message", {
+        message,
+        type,
+        date: new Date(),
+      });
+    },
+
     async processChannel(channelName) {
       try {
-        await this.reportChannel(channelName);
+        const randomSec = this.randomInRange(2, 7);
+        const message = this.getRandomReason();
+
+        await this.wait(randomSec);
+        await this.reportChannel(channelName, message);
         await saveReported({ name: channelName });
+
+        this.sendMessage(
+          `[${channelName}] was sent report: ${message}`,
+          "info"
+        );
       } catch (err) {
         console.error(err);
+        this.sendMessage(err.message, "error");
       }
     },
 
-    async runReporting() {
-      console.log("Loading interactive example...");
+    async stopReporting() {
+      this.sendMessage("Stopping reporting...", "warn");
+      this.stop = true;
+    },
 
-      const { data: telegramChannels } = await getChannels();
+    async runReporting() {
+      this.sendMessage("Reporting launched", "warn");
+
+      const channelsResponse = await getChannels({});
+
+      const { data: telegramChannels } = channelsResponse;
 
       for (let i = 0; i < telegramChannels.length; i += 1) {
         try {
-          const channelName = telegramChannels[i];
+          if (this.stop) {
+            this.stop = false;
+            this.sendMessage("Reporting stopped", "warn");
 
-          await this.processChannel(channelName);
+            /** exit */
+            return;
+          }
+
+          const channel = telegramChannels[i];
+
+          await this.processChannel(channel.name);
         } catch (err) {
           console.error(err);
+          this.sendMessage(err.message, "error");
         }
       }
     },

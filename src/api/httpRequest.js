@@ -1,9 +1,10 @@
+/* eslint-disable no-debugger */
 import axios from "axios";
 
 import { ApiConstants } from "@/constants/api";
 
 function getAccessToken() {
-  localStorage.getItem(ApiConstants.accessTokenKey);
+  return localStorage.getItem(ApiConstants.accessTokenKey);
 }
 
 function setAccessToken(token) {
