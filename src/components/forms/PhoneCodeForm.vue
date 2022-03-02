@@ -66,15 +66,15 @@ export default {
     },
     apiId: {
       type: Number,
-      requierd: true,
+      required: true,
     },
     apiHash: {
       type: String,
-      requierd: true,
+      required: true,
     },
     phoneNumber: {
       type: String,
-      requierd: true,
+      required: true,
     },
   },
   mixins: [TelegramBotMixin],
