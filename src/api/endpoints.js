@@ -3,7 +3,7 @@ import { httpRequest } from "./httpRequest";
 export async function authRequest({ login, password }) {
   try {
     const res = await httpRequest({
-      uri: "auth",
+      url: "auth",
       method: "POST",
       data: { login, password },
     });
@@ -17,7 +17,7 @@ export async function authRequest({ login, password }) {
 export async function getChannels({ limit = 150 }) {
   try {
     const res = await httpRequest({
-      uri: "telegram/channel",
+      url: "telegram/channel",
       method: "GET",
       params: { limit },
     });
@@ -31,7 +31,7 @@ export async function getChannels({ limit = 150 }) {
 export async function saveReported({ name }) {
   try {
     const res = await httpRequest({
-      uri: "telegram/report",
+      url: "telegram/report",
       method: "POST",
       data: { name },
     });

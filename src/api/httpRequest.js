@@ -10,13 +10,14 @@ function setAccessToken(token) {
   localStorage.setItem(ApiConstants.accessTokenKey, token);
 }
 
-export async function httpRequest({ uri, data, method, params }) {
+export async function httpRequest({ url, data, method, params, headers = {} }) {
   const requestOptions = {
     baseURL: ApiConstants.serverApi,
-    uri,
+    url,
     method: method,
     data,
     params,
+    headers: Object.assign({}, headers),
   };
 
   const accessToken = getAccessToken();
@@ -24,19 +25,13 @@ export async function httpRequest({ uri, data, method, params }) {
   if (accessToken) {
     const tokenValue = `Bearer ${accessToken}`;
 
-    if (!requestOptions.headers) {
-      requestOptions.headers = {
-        Authorization: tokenValue,
-      };
-    } else {
-      requestOptions.headers.Authorization = tokenValue;
-    }
+    requestOptions.headers.Authorization = tokenValue;
   }
 
   try {
     const result = await axios(requestOptions);
 
-    if (uri === "auth" && method === "POST") {
+    if (url === "auth" && method === "POST") {
       setAccessToken(result.data.tokens.accessToken);
     }
 
