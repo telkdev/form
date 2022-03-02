@@ -12,9 +12,9 @@ export default {
       sessionKey: "tgSession",
       client: null,
       // User data
-      apiId: null,
-      apiHash: null,
-      phoneNumber: null,
+      // apiId: null,
+      // apiHash: null,
+      // phoneNumber: null,
     };
   },
   computed: {},

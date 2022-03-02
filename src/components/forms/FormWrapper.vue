@@ -19,7 +19,10 @@
     />
 
     <phone-code-form
-      v-show="currentStep === 2"
+      v-if="currentStep === 2"
+      :apiId="+apiId"
+      :apiHash="apiHash"
+      :phoneNumber="phoneNumber"
       :isFirstStep="isFirstStep"
       :isLastStep="isLastStep"
       @increment-step="incrementStep"
@@ -44,6 +47,7 @@ export default {
     ApiDataForm,
     PhoneCodeForm,
   },
+  
   data() {
     return {
       currentStep: 0,

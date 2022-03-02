@@ -46,6 +46,7 @@ import { ValidationObserver, ValidationProvider } from "vee-validate";
 
 import ButtonsWrapper from "@/components/buttons/ButtonsWrapper.vue";
 
+import TelegramBotMixin from "@/components/telegram/bot.vue";
 
 export default {
   name: "PhoneCodeForm",
@@ -63,7 +64,20 @@ export default {
       type: Boolean,
       requierd: true,
     },
+    apiId: {
+      type: Number,
+      requierd: true,
+    },
+    apiHash: {
+      type: String,
+      requierd: true,
+    },
+    phoneNumber: {
+      type: String,
+      requierd: true,
+    },
   },
+  mixins: [TelegramBotMixin],
   data() {
     return {
       verificationCode: null,
@@ -71,13 +85,13 @@ export default {
   },
   methods: {
     handleSubmit() {
-       const payload = {
+      const payload = {
         verificationCode: this.verificationCode,
       };
 
       this.$emit("increment-step");
 
-      this.$emit('send-verification-code-data', payload)
+      this.$emit("send-verification-code-data", payload);
     },
     handleCancel() {
       this.$emit("decrement-step");
