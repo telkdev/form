@@ -57,11 +57,11 @@ export default {
   props: {
     isFirstStep: {
       type: Boolean,
-      requierd: true,
+      required: true,
     },
     isLastStep: {
       type: Boolean,
-      requierd: true,
+      required: true,
     },
   },
   data() {
