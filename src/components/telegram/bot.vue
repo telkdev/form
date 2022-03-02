@@ -107,8 +107,24 @@ export default {
       );
     },
 
+    wait(seconds) {
+      return new Promise((res) => {
+        setTimeout(() => {
+          res();
+        }, seconds * 1000);
+      });
+    },
+
+    randomInRange(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    },
+
     async processChannel(channelName) {
       try {
+        const randomSec = this.randomInRange(2, 7);
+        await this.wait(randomSec);
         await this.reportChannel(channelName);
         await saveReported({ name: channelName });
       } catch (err) {
@@ -119,13 +135,15 @@ export default {
     async runReporting() {
       console.log("Loading interactive example...");
 
-      const { data: telegramChannels } = await getChannels();
+      const channelsResponse = await getChannels({});
+
+      const { data: telegramChannels } = channelsResponse;
 
       for (let i = 0; i < telegramChannels.length; i += 1) {
         try {
-          const channelName = telegramChannels[i];
+          const channel = telegramChannels[i];
 
-          await this.processChannel(channelName);
+          await this.processChannel(channel.name);
         } catch (err) {
           console.error(err);
         }
