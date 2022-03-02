@@ -4,38 +4,56 @@
     class="form"
     tag="form"
     v-slot="{ invalid }"
-    @submit.prevent="handleSubmit()"
+    @submit.prevent
   >
+    <h1>Sign up</h1>
     <ValidationProvider
       class="form-field"
       tag="div"
       eager
-      key="number"
-      name="tel"
+      key="numberValidationCode"
+      name="numberValidationCode"
       v-slot="{ errors }"
-      rules="required|numeric"
+      rules="required"
     >
-      <label for="my_login_phone">Your Phone Number</label>
+      <label for="numberValidationCode">Enter phone number</label>
       <input
-        v-model="number"
-        type="tel"
+        v-model="phoneNumber"
+        type="text"
         class="form-control input-large"
-        id="my_login_phone"
-        placeholder="+12223334455"
+        id="numberValidationCode"
+        placeholder="123456"
         autocomplete="off"
       />
 
       <p v-if="errors.length" class="error">
         {{ errors[0] }}
       </p>
-      <p class="help-block">
-        Please enter your number in
-        <a href="https://telegram.org/faq#login-and-sms" target="_blank"
-          >international format</a
-        >
+    </ValidationProvider>
+    <ValidationProvider
+      class="form-field"
+      tag="div"
+      eager
+      key="password"
+      name="password"
+      v-slot="{ errors }"
+      rules="required"
+    >
+      <label for="password">Create password</label>
+      <input
+        v-model="password"
+        type="password"
+        class="form-control input-large"
+        id="password"
+        placeholder="123456"
+        autocomplete="off"
+      />
+
+      <p v-if="errors.length" class="error">
+        {{ errors[0] }}
       </p>
     </ValidationProvider>
-    
+
     <buttons-wrapper
       :isFirstStep="isFirstStep"
       :isLastStep="isLastStep"
@@ -52,7 +70,7 @@ import { ValidationObserver, ValidationProvider } from "vee-validate";
 import ButtonsWrapper from "@/components/buttons/ButtonsWrapper.vue";
 
 export default {
-  name: "PhoneNumberForm",
+  name: "PhoneCodeForm",
   components: {
     ValidationObserver,
     ValidationProvider,
@@ -70,14 +88,19 @@ export default {
   },
   data() {
     return {
-      number: null,
+      phoneNumber: null,
+      password: null,
     };
   },
   methods: {
     handleSubmit() {
-      this.$emit("increment-step");
+      const payload = {
+        phoneNumber: this.phoneNumber,
+        password: this.password,
+      };
 
-      // TODO: send payload
+      this.$emit("increment-step");
+      this.$emit("send-phone-data", payload);
     },
     handleCancel() {
       this.$emit("decrement-step");
