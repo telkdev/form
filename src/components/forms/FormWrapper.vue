@@ -28,6 +28,7 @@
       @increment-step="incrementStep"
       @decrement-step="decrementStep"
       @send-verification-code-data="setVerificationCodeData"
+      @send-message="handleLoggerMessage"
     />
   </div>
 </template>
@@ -112,6 +113,12 @@ export default {
 
     setVerificationCodeData(payload) {
       this.verificationCode = payload.verificationCode;
+    },
+
+    handleLoggerMessage(payload) {
+      // eslint-disable-next-line no-debugger
+      debugger;
+      console.log(payload);
     },
 
     // Temporary disabled
