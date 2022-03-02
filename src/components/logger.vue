@@ -6,9 +6,9 @@ export default {
   name: "Logger-component",
   components: {},
   methods: {
-    onMessage({ message, type, date }) {
-      // TODO show logs
-    },
+    // onMessage({ message, type, date }) {
+    //   // TODO show logs
+    // },
   },
 };
 </script>
