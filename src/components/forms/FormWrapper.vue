@@ -220,6 +220,11 @@ input {
   color: #737373;
 }
 
+.btn-wrapper {
+  display: flex;
+  gap: 10px;
+}
+
 .btn {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);

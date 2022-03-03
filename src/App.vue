@@ -56,6 +56,7 @@ body,
 
 body {
   margin: 0;
+  background: #fafafa;
 }
 
 ul,
@@ -82,6 +83,19 @@ li {
     "logger logger";
   grid-template-rows: 1fr auto auto;
   grid-template-columns: 600px 1fr;
+}
+
+@media (max-width: 1200px) {
+  .page-inner {
+    display: grid;
+    grid-template-areas:
+      "instructions"
+      "form"
+      "info "
+      "logger";
+    grid-template-rows: 1fr auto auto auto;
+    grid-template-columns: 1fr;
+  }
 }
 
 .page-info-wrapper {

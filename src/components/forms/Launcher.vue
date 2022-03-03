@@ -1,20 +1,44 @@
 <template>
   <div>
-    <p>The bot will be started in a moment</p>
+    <div class="launcher-status">
+      <p>The bot will be started in a moment</p>
 
-    <ul>
-      <li>
-        {{
-          connected ? "Connection established " : "Connection not established"
-        }}
-      </li>
-      <li>{{ launched ? "Bot is running" : "Bot is paused" }}</li>
-    </ul>
+      <ul>
+        <li>
+          {{
+            connected ? "Connection established " : "Connection not established"
+          }}
+        </li>
+        <li>{{ launched ? "Bot is running" : "Bot is paused" }}</li>
+      </ul>
+    </div>
 
-    <button @click="handleClearData">Clear all data</button>
-    <button @click="handleReconnect" :disabled="connected">Reconnect</button>
-    <button @click="runReporting" :disabled="!connected">Restart</button>
-    <button @click="stopReporting" :disabled="!launched">Stop</button>
+    <div class="btn-wrapper">
+      <button @click="handleClearData" class="btn btn-secondary">
+        Clear all data
+      </button>
+      <button
+        @click="handleReconnect"
+        :disabled="connected"
+        class="btn btn-primary"
+      >
+        Reconnect
+      </button>
+      <button
+        @click="runReporting"
+        :disabled="!connected"
+        class="btn btn-primary"
+      >
+        Restart
+      </button>
+      <button
+        @click="stopReporting"
+        :disabled="!launched"
+        class="btn btn-secondary"
+      >
+        Stop
+      </button>
+    </div>
   </div>
 </template>
 
@@ -79,3 +103,15 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.launcher-status {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-bottom: 1em;
+  background: #333;
+  color: rgb(8, 212, 8);
+  padding: 15px;
+}
+</style>

@@ -1,20 +1,24 @@
 <template>
   <div>
-    <nav>
-      <ul class="tabs">
-        <li v-for="(navItem, index) of navArray" :key="index">
-          <a
-            @click="setActiveTab(navItem.activeTabIndex)"
-            :class="{ active: activetab === navItem.activeTabIndex }"
-          >
-            {{ navItem.title }}
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <div class="instructions-header">
+      <nav>
+        <ul class="tabs">
+          <li v-for="(navItem, index) of navArray" :key="index">
+            <a
+              @click="setActiveTab(navItem.activeTabIndex)"
+              :class="{ active: activeTab === navItem.activeTabIndex }"
+            >
+              {{ navItem.title }}
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <button @click="toggleInstructionsVisibility()" class="btn btn-primary">
+        {{ toggleVisibilityButtonText }}
+      </button>
+    </div>
 
-    <div class="content">
-      
+    <div v-if="isShow" class="content">
       <div v-if="activeTab === 0" class="tabcontent">
         <h2>Instructions:</h2>
         <h3>
@@ -95,6 +99,7 @@ export default {
   data() {
     return {
       activeTab: 0,
+      isShow: true,
       navArray: [
         {
           title: "Instructions in eng",
@@ -111,16 +116,34 @@ export default {
     setActiveTab(activeTabIndex) {
       this.activeTab = activeTabIndex;
     },
+    toggleInstructionsVisibility() {
+      this.isShow = !this.isShow;
+    },
+  },
+  computed: {
+    toggleVisibilityButtonText() {
+      if (this.isShow) {
+        return this.activeTab === 0 ? "Hide" : "Сховати";
+      } else {
+        return this.activeTab === 1 ? "Show" : "Розгорнути";
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
+.instructions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 /* Style the tabs */
 .tabs {
+  display: flex;
   overflow: hidden;
   margin-left: 20px;
-  margin-bottom: -2px; 
+  margin-bottom: -2px;
 }
 
 .tabs ul {
@@ -162,6 +185,7 @@ export default {
   padding: 30px;
   border: 1px solid #ccc;
   border-radius: 10px;
+   background-color: #fff;
   box-shadow: 3px 3px 6px #e1e1e1;
 }
 </style>
