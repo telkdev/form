@@ -283,7 +283,6 @@ input {
   margin-bottom: 0;
   font-size: 14px;
   font-weight: normal;
-  line-height: 1.428571429;
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
@@ -291,8 +290,6 @@ input {
   background-image: none;
   border: 0;
   border-radius: 4px;
-  user-select: none;
-  text-shadow: none;
 }
 
 .btn-primary {
@@ -301,10 +298,18 @@ input {
   border-color: #357ebd;
 }
 
+.btn-primary:hover {
+  background-color: #1e6099;
+}
+
 .btn-secondary {
   color: #fff;
   background-color: #a00028;
   border-color: rgb(90, 8, 12);
+}
+
+.btn-secondary:hover {
+  background-color: #7c0a26;
 }
 
 .disabled {

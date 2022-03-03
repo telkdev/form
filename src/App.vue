@@ -70,7 +70,7 @@ li {
 }
 
 .page-form-wrapper {
-  max-width: 970px;
+  max-width: 600px;
   width: 100%;
   margin: 0 auto;
   flex-grow: 1;

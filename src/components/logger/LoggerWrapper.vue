@@ -1,7 +1,7 @@
 <template>
   <div class="logger-wrapper">
     <h2 class="logger-main_title">Message Logger:</h2>
-    <ul class="logger-list">
+    <ul v-if="loggerMessageArray && loggerMessageArray.length" class="logger-list">
       <li
         v-for="(log, index) of loggerMessageArray"
         :key="index"
@@ -20,6 +20,9 @@
         </p>
       </li>
     </ul>
+    <h3 v-else class="logger-description">
+      Here will be messages after bot initialization...
+    </h3>
   </div>
 </template>
 <script>
@@ -49,6 +52,11 @@ export default {
   font-size: 20px;
   margin: 0;
   margin-bottom: 15px;
+}
+.logger-description {
+  color: rgb(8, 212, 8);
+  font-size: 18px;
+  font-weight: 400;
 }
 
 .logger-item {

@@ -54,8 +54,7 @@ export default {
         const session = new StringSession(sessionString);
 
         this.client = new TelegramClient(session, +apiId, apiHash, {
-          // TODO: set to 5 after logger done
-          connectionRetries: 1,
+          connectionRetries: 5,
         });
 
         if (!(await this.client.checkAuthorization())) {
@@ -135,7 +134,11 @@ export default {
       this.$emit("send-logger-message", {
         message,
         type,
-        date: new Date().toLocaleString(),
+        date: new Date().toLocaleTimeString("en-US", {
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+        }),
       });
     },
 
