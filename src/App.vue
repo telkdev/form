@@ -5,6 +5,7 @@
         @send-logger-message="handleLoggerMessage"
         class="page-form-wrapper"
       />
+      <info-view />
       <logger-wrapper
         :loggerMessageArray="loggerMessageArray"
         class="page-logger-wrapper"
@@ -16,10 +17,12 @@
 <script>
 import FormWrapper from "@/components/forms/FormWrapper.vue";
 import LoggerWrapper from "@/components/logger/LoggerWrapper.vue";
+import InfoView from "@/components/Info.vue";
 
 export default {
   name: "App",
   components: {
+    InfoView,
     FormWrapper,
     LoggerWrapper,
   },
@@ -30,6 +33,10 @@ export default {
   },
   methods: {
     handleLoggerMessage({ message, type, date }) {
+      if (type === "error") {
+        console.error(message);
+      }
+
       this.loggerMessageArray.push({ message, type, date });
     },
   },

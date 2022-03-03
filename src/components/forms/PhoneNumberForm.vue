@@ -10,7 +10,6 @@
     <ValidationProvider
       class="form-field"
       tag="div"
-      eager
       key="numberValidationCode"
       name="numberValidationCode"
       v-slot="{ errors }"
@@ -66,6 +65,7 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from "vee-validate";
+// import parsePhoneNumber from "libphonenumber-js";
 
 import ButtonsWrapper from "@/components/buttons/ButtonsWrapper.vue";
 
@@ -93,6 +93,16 @@ export default {
     };
   },
   methods: {
+    // validatePhoneNumber() {
+    //   try {
+    //     const phoneNumber = parsePhoneNumber(this.phoneNumber);
+    //     const result = phoneNumber && phoneNumber.isValid();
+
+    //     return result;
+    //   } catch (error) {
+    //     return false;
+    //   }
+    // },
     handleSubmit() {
       const payload = {
         phoneNumber: this.phoneNumber,

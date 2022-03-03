@@ -14,17 +14,15 @@ export default {
     return {
       sessionKey: "tgSession",
       client: null,
-      stop: false,
+      connected: null,
+      launched: null,
+      verificationCode: null,
     };
   },
   computed: {},
 
   async mounted() {
     await this.initializeConnection();
-
-    setTimeout(() => {
-      this.stopReporting();
-    }, 15000);
 
     await this.runReporting();
   },
@@ -35,7 +33,7 @@ export default {
     },
 
     getSession() {
-      localStorage.getItem(this.sessionKey);
+      return localStorage.getItem(this.sessionKey);
     },
 
     setSession(sessionString) {
@@ -57,24 +55,28 @@ export default {
           connectionRetries: 5,
         });
 
-        if (!(await this.client.checkAuthorization())) {
-          await this.client.start({
-            phoneNumber: this.phoneNumber,
-            phoneCode: async () =>
-              await prompt("verification code from telegram"),
-            onError: (err) => {
-              this.sendMessage(err.message, "error");
+        await this.client.start({
+          phoneNumber: this.phoneNumber,
+          phoneCode: async () => {
+            this.verificationCode = await prompt("Enter code sent by Telegram");
 
-              console.log(err);
-            },
-          });
+            return this.verificationCode;
+          },
+          onError: (err) => {
+            this.sendMessage(err.message, "error");
 
-          this.sendMessage("Connected", "warn");
+            console.log(err);
+            throw err;
+          },
+        });
 
-          this.setSession(this.client.session.save());
-        }
+        this.sendMessage("Connected", "warn");
+
+        this.setSession(this.client.session.save());
 
         await this.client.connect();
+
+        this.connected = true;
       } catch (err) {
         console.error(err);
         this.sendMessage(err.message, "error");
@@ -118,9 +120,16 @@ export default {
 
     wait(seconds) {
       return new Promise((res) => {
-        setTimeout(() => {
+        const timer = setTimeout(() => {
           res();
         }, seconds * 1000);
+
+        setInterval(() => {
+          if (!this.launched) {
+            clearTimeout(timer);
+            res();
+          }
+        }, 1);
       });
     },
 
@@ -144,10 +153,9 @@ export default {
 
     async processChannel(channelName) {
       try {
-        const randomSec = this.randomInRange(2, 7);
+        const randomSec = this.randomInRange(30, 60);
         const message = this.getRandomReason();
 
-        await this.wait(randomSec);
         await this.reportChannel(channelName, message);
         await saveReported({ name: channelName });
 
@@ -155,19 +163,31 @@ export default {
           `[${channelName}] was sent report: ${message}`,
           "info"
         );
+
+        await this.wait(randomSec);
       } catch (err) {
         console.error(err);
         this.sendMessage(err.message, "error");
       }
     },
 
+    async handleReconnect() {
+      return this.initializeConnection();
+    },
+
     async stopReporting() {
       this.sendMessage("Stopping reporting...", "warn");
-      this.stop = true;
+      this.launched = false;
     },
 
     async runReporting() {
       this.sendMessage("Reporting launched", "warn");
+
+      if (!this.connected) {
+        return this.sendMessage("Couldn't launch without connection", "error");
+      }
+
+      this.launched = true;
 
       const channelsResponse = await getChannels({});
 
@@ -175,8 +195,7 @@ export default {
 
       for (let i = 0; i < telegramChannels.length; i += 1) {
         try {
-          if (this.stop) {
-            this.stop = false;
+          if (!this.launched) {
             this.sendMessage("Reporting stopped", "warn");
 
             /** exit */

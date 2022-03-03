@@ -1,7 +1,15 @@
 <template>
   <div class="form-wrapper">
-    <api-data-form
+    <instructions-view
       v-show="currentStep === 0"
+      :isFirstStep="isFirstStep"
+      :isLastStep="isLastStep"
+      @increment-step="incrementStep"
+      @decrement-step="decrementStep"
+      @send-api-data="setApiData"
+    /> 
+    <api-data-form
+      v-show="currentStep === 1"
       :isFirstStep="isFirstStep"
       :isLastStep="isLastStep"
       @increment-step="incrementStep"
@@ -10,7 +18,7 @@
     />
 
     <login-form
-      v-show="currentStep === 1"
+      v-show="currentStep === 2"
       :isFirstStep="isFirstStep"
       :isLastStep="isLastStep"
       @increment-step="incrementStep"
@@ -18,8 +26,8 @@
       @send-phone-data="setPhoneData"
     />
 
-    <phone-code-form
-      v-if="currentStep === 2"
+    <launcher-view
+      v-if="currentStep === 3"
       :apiId="+apiId"
       :apiHash="apiHash"
       :phoneNumber="phoneNumber"
@@ -36,7 +44,8 @@
 <script>
 import ApiDataForm from "@/components/forms/ApiDataForm.vue";
 import PhoneNumberForm from "@/components/forms/PhoneNumberForm.vue";
-import PhoneCodeForm from "@/components/forms/PhoneCodeForm.vue";
+import LauncherView from "@/components/forms/Launcher.vue";
+import InstructionsView from "@/components/Instructions.vue";
 
 import { authRequest } from "@/api/endpoints";
 
@@ -46,7 +55,8 @@ export default {
     // TODO: rename
     "login-form": PhoneNumberForm,
     ApiDataForm,
-    PhoneCodeForm,
+    LauncherView,
+    InstructionsView
   },
 
   data() {

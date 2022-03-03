@@ -1,7 +1,10 @@
 <template>
   <div class="logger-wrapper">
     <h2 class="logger-main_title">Message Logger:</h2>
-    <ul v-if="loggerMessageArray && loggerMessageArray.length" class="logger-list">
+    <ul
+      v-if="loggerMessageArray && loggerMessageArray.length"
+      class="logger-list"
+    >
       <li
         v-for="(log, index) of loggerMessageArray"
         :key="index"
@@ -14,7 +17,7 @@
         <span class="logger-date">
           {{ log.date }}
         </span>
-        <span class="logger-type"> [{{ log.type }}] </span>
+        <span v-if="false" class="logger-type"> [{{ log.type }}] </span>
         <p class="logger-message">
           {{ log.message }}
         </p>
@@ -34,10 +37,10 @@ export default {
       required: true,
     },
   },
-  methods: {
-    // onMessage({ message, type, date }) {
-    //   // TODO show logs
-    // },
+  computed: {
+    lastItem() {
+      return this.loggerMessageArray.slice(-1)[0];
+    },
   },
 };
 </script>
@@ -61,6 +64,8 @@ export default {
 
 .logger-item {
   display: flex;
+  color: rgb(8, 212, 8);
+
   align-items: flex-start;
   gap: 12px;
 }
@@ -70,7 +75,7 @@ export default {
 }
 
 .logger-item--warn {
-  color: rgb(8, 212, 8);
+  color: #ffa500;
 }
 
 .logger-item--error {
