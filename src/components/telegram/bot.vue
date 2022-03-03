@@ -3,7 +3,10 @@ const { Api, TelegramClient } = require("telegram");
 const { StringSession } = require("telegram/sessions");
 
 import { getChannels, saveReported } from "@/api/endpoints";
-
+// We get User data(below) after phone code form initialization
+// apiId: null,
+// apiHash: null,
+// phoneNumber: null,
 export default {
   name: "Telegram-Bot",
   components: {},
@@ -12,10 +15,6 @@ export default {
       sessionKey: "tgSession",
       client: null,
       stop: false,
-      // User data
-      // apiId: null,
-      // apiHash: null,
-      // phoneNumber: null,
     };
   },
   computed: {},
@@ -31,11 +30,6 @@ export default {
   },
 
   methods: {
-    setApiData(payload) {
-      this.apiId = payload.apiId;
-      this.apiHash = payload.apiHash;
-    },
-
     setPhoneData(payload) {
       this.phoneNumber = payload.phoneNumber;
     },
@@ -49,37 +43,43 @@ export default {
     },
 
     async initializeConnection() {
-      const { apiId, apiHash } = this;
-      let sessionString = this.getSession();
+      try {
+        const { apiId, apiHash } = this;
+        let sessionString = this.getSession();
 
-      if (!sessionString) {
-        sessionString = "";
-      }
+        if (!sessionString) {
+          sessionString = "";
+        }
 
-      const session = new StringSession(sessionString);
+        const session = new StringSession(sessionString);
 
-      this.client = new TelegramClient(session, apiId, apiHash, {
-        connectionRetries: 5,
-      });
-
-      if (!(await this.client.checkAuthorization())) {
-        await this.client.start({
-          phoneNumber: this.phoneNumber,
-          phoneCode: async () =>
-            await prompt("verification code from telegram"),
-          onError: (err) => {
-            this.sendMessage(err.message, "error");
-
-            console.log(err);
-          },
+        this.client = new TelegramClient(session, +apiId, apiHash, {
+          // TODO: set to 5 after logger done
+          connectionRetries: 1,
         });
 
-        this.sendMessage("Connected", "warn");
+        if (!(await this.client.checkAuthorization())) {
+          await this.client.start({
+            phoneNumber: this.phoneNumber,
+            phoneCode: async () =>
+              await prompt("verification code from telegram"),
+            onError: (err) => {
+              this.sendMessage(err.message, "error");
 
-        this.setSession(this.client.session.save());
+              console.log(err);
+            },
+          });
+
+          this.sendMessage("Connected", "warn");
+
+          this.setSession(this.client.session.save());
+        }
+
+        await this.client.connect();
+      } catch (err) {
+        console.error(err);
+        this.sendMessage(err.message, "error");
       }
-
-      await this.client.connect();
     },
 
     getRandomReason() {
@@ -132,10 +132,10 @@ export default {
     },
 
     sendMessage(message, type = "info") {
-      this.$emit("send-message", {
+      this.$emit("send-logger-message", {
         message,
         type,
-        date: new Date(),
+        date: new Date().toLocaleString(),
       });
     },
 
