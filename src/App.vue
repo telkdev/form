@@ -2,7 +2,7 @@
   <div class="page" id="app">
     <header class="header page-header">
       <div class="header-inner flex items-center justify-between p-4">
-        <span class="logo flex">Korabel</span>
+        <span class="text-black text-4xl">Korabel</span>
         <locale-changer />
       </div>
     </header>

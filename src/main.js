@@ -1,6 +1,8 @@
 import Vue from "vue";
 import App from "./App.vue";
 
+import './index.css';
+
 // TODO: remove validator logic to external file
 import { isValidPhoneNumber } from "libphonenumber-js";
 
