@@ -1,21 +1,35 @@
 <template>
   <div class="page" id="app">
-    <div class="page-inner">
-      <form-wrapper
-        @send-logger-message="handleLoggerMessage"
-        class="page-form-wrapper"
-      />
-      <instructions-view class="page-instructions-wrapper" />
-      <info-view class="page-info-wrapper" />
-      <logger-wrapper
-        :loggerMessageArray="loggerMessageArray"
-        class="page-logger-wrapper"
-      />
-    </div>
+    <header class="header page-header">
+      <div class="header-inner flex items-center justify-between p-4">
+        <span class="logo flex">Korabel</span>
+        <locale-changer />
+      </div>
+    </header>
+    <main class="page-main">
+      <div class="page-inner">
+        <form-wrapper
+          @send-logger-message="handleLoggerMessage"
+          class="page-form-wrapper"
+        />
+        <instructions-view class="page-instructions-wrapper" />
+
+        <logger-wrapper
+          :loggerMessageArray="loggerMessageArray"
+          class="page-logger-wrapper"
+        />
+      </div>
+    </main>
+    <footer class="footer page-footer">
+      <div class="footer-inner">
+        <info-view class="page-info-wrapper" />
+      </div>
+    </footer>
   </div>
 </template>
 
 <script>
+import LocaleChanger from "@/components/locale/LocaleChanger.vue";
 import FormWrapper from "@/components/forms/FormWrapper.vue";
 import LoggerWrapper from "@/components/logger/LoggerWrapper.vue";
 import InfoView from "@/components/Info.vue";
@@ -28,6 +42,7 @@ export default {
     FormWrapper,
     LoggerWrapper,
     InstructionsView,
+    LocaleChanger,
   },
   data() {
     return {
@@ -72,51 +87,50 @@ li {
     Verdana, sans-serif;
   font-size: 16px;
   line-height: 20px;
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
-.page-inner {
-  display: grid;
-  grid-template-areas:
-    "form instructions"
-    "info info"
-    "logger logger";
-  grid-template-rows: 1fr auto auto;
-  grid-template-columns: 600px 1fr;
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.header,
+.footer {
+  background-color: rgb(27, 139, 70);
+}
+
+.header-inner,
+.footer-inner {
+  max-width: 1500px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 15px;
+}
+
+.page-main {
+  flex-grow: 1;
 }
 
 @media (max-width: 1200px) {
-  .page-inner {
-    display: grid;
-    grid-template-areas:
-      "instructions"
-      "form"
-      "info "
-      "logger";
-    grid-template-rows: 1fr auto auto auto;
-    grid-template-columns: 1fr;
-  }
 }
 
 .page-info-wrapper {
-  grid-area: info;
-  padding: 15px;
-  background-color: rgb(22, 168, 78);
-  color: rgb(0, 0, 0);
 }
 
 .page-instructions-wrapper {
-  grid-area: instructions;
   padding: 15px;
 }
 
 .page-form-wrapper {
-  grid-area: form;
   padding: 15px;
 }
 
 .page-logger-wrapper {
-  grid-area: logger;
   padding: 15px;
   height: 330px;
   overflow-y: auto;
