@@ -3,7 +3,8 @@
     <h2>Інструкції:</h2>
     <h3>
       Цей додаток створений для зупинення російської пропаганди, яка шириться в
-      Телеграм-каналах
+      Телеграм-каналах. Дозволяє в автоматичному режимі відсилати скарги на
+      канали.
     </h3>
     <ul>
       <li>
@@ -12,21 +13,21 @@
           >https://my.telegram.org/</a
         >
       </li>
-      <li>2. вводимо свій номер телефону та код авторизації</li>
+      <li>2. Вводимо свій номер телефону та код авторизації</li>
       <li>
-        3. переходимо у вкладку
+        3. Переходимо у вкладку
         <a target="blank" href="https://my.telegram.org/apps"
           >API development tools
         </a>
       </li>
-      <li>4. пишемо любий `App title` та `Short name` та підтверджуємо</li>
+      <li>4. Пишемо любий `App title` та `Short name` та підтверджуємо</li>
       <li>
-        5. копіюємо `App api_id` та `App api_hash`, їх необхідно буде ввести в
+        5. Копіюємо `App api_id` та `App api_hash`, їх необхідно буде ввести в
         наступних кроках в цьому додатку
       </li>
       <li>
         6.
-        <a @click="handleSubmit">переходимо на наступний крок цього додатку</a>
+        <a @click="handleSubmit">Переходимо на наступний крок цього додатку</a>
         і вводимо данні в поля додатку
       </li>
     </ul>
@@ -40,26 +41,27 @@
     <h2>Instructions:</h2>
     <h3>
       This application was created to stop Russian propaganda, which is
-      spreading in Telegram channels
+      spreading in Telegram channels. Allows you to automatically send reports
+      to channels.
     </h3>
 
     <ul>
       <li>
-        1. go to
+        1. Go to
         <a target="blank" href="https://my.telegram.org/"
           >https://my.telegram.org/</a
         >
       </li>
-      <li>2. pass phone number and authorization code</li>
+      <li>2. Pass phone number and authorization code</li>
       <li>
-        3. go to
+        3. Go to
         <a target="blank" href="https://my.telegram.org/apps"
           >API development tools
         </a>
       </li>
-      <li>4. enter `App title` and `Short name` then submit</li>
+      <li>4. Enter `App title` and `Short name` then submit</li>
       <li>
-        5. copy `App api_id` and `App api_hash`, they will needed for start
+        5. Copy `App api_id` and `App api_hash`, they will needed for start
         reporting process
       </li>
       <li>
@@ -77,7 +79,7 @@
     <buttons-wrapper
       :isFirstStep="isFirstStep"
       :isLastStep="isLastStep"
-      :isInvalid="invalid"
+      :isInvalid="false"
       @handle-submit="handleSubmit()"
       @handle-cancel="handleCancel()"
     />
@@ -102,21 +104,9 @@ export default {
       required: true,
     },
   },
-  data() {
-    return {
-      apiId: localStorage.getItem("apiId"),
-      apiHash: localStorage.getItem("apiHash"),
-    };
-  },
   methods: {
     handleSubmit() {
-      const payload = {
-        apiId: this.apiId,
-        apiHash: this.apiHash,
-      };
-
       this.$emit("increment-step");
-      this.$emit("send-api-data", payload);
     },
     handleCancel() {
       this.$emit("decrement-step");

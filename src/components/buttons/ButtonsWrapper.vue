@@ -25,11 +25,11 @@ export default {
   props: {
     isFirstStep: {
       type: Boolean,
-      requierd: true,
+      required: true,
     },
     isLastStep: {
       type: Boolean,
-      requierd: true,
+      required: true,
     },
     isInvalid: {
       type: Boolean,

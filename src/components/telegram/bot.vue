@@ -42,6 +42,8 @@ export default {
 
     async initializeConnection() {
       try {
+        this.sendMessage("Connecting...", "warn");
+
         const { apiId, apiHash } = this;
         let sessionString = this.getSession();
 
@@ -81,6 +83,13 @@ export default {
         console.error(err);
         this.sendMessage(err.message, "error");
       }
+    },
+
+    disconnect() {
+      this.stopReporting();
+      this.client = null;
+      this.connected = null;
+      this.verificationCode = null;
     },
 
     getRandomReason() {

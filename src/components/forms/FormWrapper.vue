@@ -7,7 +7,7 @@
       @increment-step="incrementStep"
       @decrement-step="decrementStep"
       @send-api-data="setApiData"
-    /> 
+    />
     <api-data-form
       v-show="currentStep === 1"
       :isFirstStep="isFirstStep"
@@ -34,6 +34,7 @@
       :isFirstStep="isFirstStep"
       :isLastStep="isLastStep"
       @increment-step="incrementStep"
+      @clear-data="clearData"
       @decrement-step="decrementStep"
       @send-verification-code-data="setVerificationCodeData"
       @send-logger-message="handleLoggerMessage"
@@ -56,14 +57,24 @@ export default {
     "login-form": PhoneNumberForm,
     ApiDataForm,
     LauncherView,
-    InstructionsView
+    InstructionsView,
+  },
+
+  mounted() {
+    console.log(this.apiId, this.apiHash);
+    if (this.tgSession) {
+      this.currentStep = 3;
+    } else if (this.apiId && this.apiHash) {
+      this.currentStep = 2;
+    }
   },
 
   data() {
     return {
       currentStep: 0,
-      totalSteps: 2,
-      apiId: null,
+      totalSteps: 3,
+      tgSession: localStorage.getItem("tgSession"),
+      apiId: localStorage.getItem("apiId"),
       apiHash: localStorage.getItem("apiHash"),
       phoneNumber: localStorage.getItem("phoneNumber"),
       password: localStorage.getItem("password"),
@@ -79,9 +90,6 @@ export default {
       return this.currentStep === this.totalSteps;
     },
   },
-  mounted() {
-    // this.apiId = localStorage.getItem("apiId");
-  },
   methods: {
     incrementStep() {
       if (this.isLastStep) return;
@@ -90,6 +98,22 @@ export default {
 
     decrementStep() {
       this.currentStep--;
+    },
+
+    clearLocalStorage() {
+      localStorage.clear();
+    },
+
+    clearData() {
+      this.phoneNumber = null;
+      this.password = null;
+      this.tgSession = null;
+      this.apiId = null;
+      this.apiHash = null;
+
+      this.clearLocalStorage();
+
+      this.currentStep = 0;
     },
 
     setApiData(payload) {

@@ -11,6 +11,7 @@
       <li>{{ launched ? "Bot is running" : "Bot is paused" }}</li>
     </ul>
 
+    <button @click="handleClearData">Clear all data</button>
     <button @click="handleReconnect" :disabled="connected">Reconnect</button>
     <button @click="runReporting" :disabled="!connected">Restart</button>
     <button @click="stopReporting" :disabled="!launched">Stop</button>
@@ -52,6 +53,17 @@ export default {
     };
   },
   methods: {
+    handleClearData() {
+      const result = prompt(
+        "This action will remove all data in the local storage. You will need to pass all steps again to able launch service again. Do you confirm your decision to remove data? Write `+` (plus sign) to confirm."
+      );
+
+      if (result && result === "+") {
+        this.disconnect();
+        this.$emit("clear-data");
+      }
+    },
+
     handleSubmit() {
       const payload = {
         verificationCode: this.verificationCode,
