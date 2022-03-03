@@ -1,4 +1,8 @@
-# form
+# Korabel
+
+## Deployment
+1. `docker build . -t korabel`
+2. `docker run -d -p 4444:80 korabel`
 
 ## Project setup
 ```
