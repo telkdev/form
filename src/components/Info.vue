@@ -6,7 +6,12 @@
         other services!
       </li>
       <li>
-        * <a target="blank" href="https://github.com/telkdev/form">Link to github</a>
+        <a
+          target="blank"
+          href="https://github.com/telkdev/form"
+          class="btn btn-primary"
+          >Github link</a
+        >
       </li>
     </ul>
   </div>
@@ -17,3 +22,17 @@ export default {
   props: {},
 };
 </script>
+
+<style scoped>
+ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+a {
+  text-decoration: none;
+}
+</style>
