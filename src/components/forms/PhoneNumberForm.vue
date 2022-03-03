@@ -6,7 +6,7 @@
     v-slot="{ invalid }"
     @submit.prevent
   >
-    <h1>Sign up</h1>
+    <h1>{{$t('sign-up')}}</h1>
     <ValidationProvider
       class="form-field"
       tag="div"
