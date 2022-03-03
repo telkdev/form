@@ -125,7 +125,7 @@ export default {
       if (this.isShow) {
         return this.activeTab === 0 ? "Hide" : "Сховати";
       } else {
-        return this.activeTab === 1 ? "Show" : "Розгорнути";
+        return this.activeTab === 1 ?  "Розгорнути" : "Show" ;
       }
     },
   },

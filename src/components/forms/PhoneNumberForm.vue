@@ -38,7 +38,7 @@
       v-slot="{ errors }"
       rules="required"
     >
-      <label for="password">Create password</label>
+      <label for="password">Create password (not from Telegram, just random)</label>
       <input
         v-model="password"
         type="password"

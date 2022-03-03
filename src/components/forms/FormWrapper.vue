@@ -51,7 +51,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.apiId, this.apiHash);
     if (this.tgSession) {
       this.currentStep = 2;
     } else if (this.apiId && this.apiHash) {
@@ -129,6 +128,14 @@ export default {
         login: this.phoneNumber,
         password: this.password,
       });
+
+      if (!user) {
+        this.handleLoggerMessage({
+          message: "Channels API error",
+          type: "error",
+          date: new Date(),
+        });
+      }
 
       console.log(user);
     },

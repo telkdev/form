@@ -204,6 +204,12 @@ export default {
 
       const channelsResponse = await getChannels({});
 
+      if (!channelsResponse) {
+        this.sendMessage("Error with channels API", "error");
+        this.disconnect();
+        return;
+      }
+
       const { data: telegramChannels } = channelsResponse;
 
       for (let i = 0; i < telegramChannels.length; i += 1) {
