@@ -22,9 +22,17 @@ export default {
   computed: {},
 
   async mounted() {
-    await this.initializeConnection();
+    try {
+      await this.initializeConnection();
 
-    await this.runReporting();
+      await this.runReporting();
+    } catch (err) {
+      this.sendMessage(err.message, "error");
+
+      this.disconnect();
+
+      console.error(err);
+    }
   },
 
   methods: {
@@ -41,48 +49,43 @@ export default {
     },
 
     async initializeConnection() {
-      try {
-        this.sendMessage("Connecting...", "warn");
+      this.sendMessage("Connecting...", "warn");
 
-        const { apiId, apiHash } = this;
-        let sessionString = this.getSession();
+      const { apiId, apiHash } = this;
+      let sessionString = this.getSession();
 
-        if (!sessionString) {
-          sessionString = "";
-        }
-
-        const session = new StringSession(sessionString);
-
-        this.client = new TelegramClient(session, +apiId, apiHash, {
-          connectionRetries: 5,
-        });
-
-        await this.client.start({
-          phoneNumber: this.phoneNumber,
-          phoneCode: async () => {
-            this.verificationCode = await prompt("Enter code sent by Telegram");
-
-            return this.verificationCode;
-          },
-          onError: (err) => {
-            this.sendMessage(err.message, "error");
-
-            console.log(err);
-            throw err;
-          },
-        });
-
-        this.sendMessage("Connected", "warn");
-
-        this.setSession(this.client.session.save());
-
-        await this.client.connect();
-
-        this.connected = true;
-      } catch (err) {
-        console.error(err);
-        this.sendMessage(err.message, "error");
+      if (!sessionString) {
+        sessionString = "";
       }
+
+      const session = new StringSession(sessionString);
+
+      this.client = new TelegramClient(session, +apiId, apiHash, {
+        connectionRetries: 5,
+      });
+
+      await this.client.start({
+        phoneNumber: this.phoneNumber,
+        phoneCode: async () => {
+          this.verificationCode = await prompt("Enter code sent by Telegram");
+
+          return this.verificationCode;
+        },
+        onError: (err) => {
+          this.sendMessage(err.message, "error");
+
+          console.log(err);
+          throw err;
+        },
+      });
+
+      this.sendMessage("Connected", "warn");
+
+      this.setSession(this.client.session.save());
+
+      await this.client.connect();
+
+      this.connected = true;
     },
 
     disconnect() {
