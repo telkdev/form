@@ -62,6 +62,7 @@ export default {
 
       this.client = new TelegramClient(session, +apiId, apiHash, {
         connectionRetries: 5,
+        useWSS: true,
       });
 
       await this.client.start({

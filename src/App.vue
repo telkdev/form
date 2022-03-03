@@ -37,7 +37,7 @@ export default {
         console.error(message);
       }
 
-      this.loggerMessageArray.push({ message, type, date });
+      this.loggerMessageArray.unshift({ message, type, date });
     },
   },
 };
