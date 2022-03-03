@@ -10,17 +10,17 @@
     <ValidationProvider
       class="form-field"
       tag="div"
-      key="numberValidationCode"
-      name="numberValidationCode"
+      key="phoneNumber"
+      name="phoneNumber"
       v-slot="{ errors }"
-      rules="required"
+      rules="required|phone"
     >
-      <label for="numberValidationCode">Enter phone number</label>
+      <label for="phoneNumber">Enter phone number</label>
       <input
         v-model="phoneNumber"
         type="text"
         class="form-control input-large"
-        id="numberValidationCode"
+        id="phoneNumber"
         placeholder="+380998877118"
         autocomplete="off"
       />
@@ -65,7 +65,6 @@
 
 <script>
 import { ValidationObserver, ValidationProvider } from "vee-validate";
-// import parsePhoneNumber from "libphonenumber-js";
 
 import ButtonsWrapper from "@/components/buttons/ButtonsWrapper.vue";
 
@@ -93,16 +92,6 @@ export default {
     };
   },
   methods: {
-    // validatePhoneNumber() {
-    //   try {
-    //     const phoneNumber = parsePhoneNumber(this.phoneNumber);
-    //     const result = phoneNumber && phoneNumber.isValid();
-
-    //     return result;
-    //   } catch (error) {
-    //     return false;
-    //   }
-    // },
     handleSubmit() {
       const payload = {
         phoneNumber: this.phoneNumber,

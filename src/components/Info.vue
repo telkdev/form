@@ -6,7 +6,7 @@
         other services!
       </li>
       <li>
-        * <a target="blank" href="https://github.com/telkdev/form">github</a>
+        * <a target="blank" href="https://github.com/telkdev/form">Link to github</a>
       </li>
     </ul>
   </div>

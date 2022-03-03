@@ -106,7 +106,7 @@ export default {
           activeTabIndex: 0,
         },
         {
-          title: "Інструкції українською",
+          title: "Інструкції укр",
           activeTabIndex: 1,
         },
       ],
