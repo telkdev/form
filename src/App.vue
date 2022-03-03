@@ -5,7 +5,8 @@
         @send-logger-message="handleLoggerMessage"
         class="page-form-wrapper"
       />
-      <info-view />
+      <instructions-view class="page-instructions-wrapper" />
+      <info-view class="page-info-wrapper" />
       <logger-wrapper
         :loggerMessageArray="loggerMessageArray"
         class="page-logger-wrapper"
@@ -18,6 +19,7 @@
 import FormWrapper from "@/components/forms/FormWrapper.vue";
 import LoggerWrapper from "@/components/logger/LoggerWrapper.vue";
 import InfoView from "@/components/Info.vue";
+import InstructionsView from "@/components/Instructions.vue";
 
 export default {
   name: "App",
@@ -25,6 +27,7 @@ export default {
     InfoView,
     FormWrapper,
     LoggerWrapper,
+    InstructionsView,
   },
   data() {
     return {
@@ -73,18 +76,33 @@ li {
 
 .page-inner {
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-areas:
+    "form instructions"
+    "info info"
+    "logger logger";
+  grid-template-rows: 1fr auto auto;
+  grid-template-columns: 600px 1fr;
+}
+
+.page-info-wrapper {
+  grid-area: info;
+  padding: 15px;
+  background-color: rgb(22, 168, 78);
+  color: rgb(0, 0, 0);
+}
+
+.page-instructions-wrapper {
+  grid-area: instructions;
+  padding: 15px;
 }
 
 .page-form-wrapper {
-  max-width: 600px;
-  width: 100%;
-  margin: 0 auto;
-  flex-grow: 1;
+  grid-area: form;
   padding: 15px;
 }
 
 .page-logger-wrapper {
+  grid-area: logger;
   padding: 15px;
   height: 330px;
   overflow-y: auto;

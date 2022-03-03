@@ -1,15 +1,7 @@
 <template>
   <div class="form-wrapper">
-    <instructions-view
-      v-show="currentStep === 0"
-      :isFirstStep="isFirstStep"
-      :isLastStep="isLastStep"
-      @increment-step="incrementStep"
-      @decrement-step="decrementStep"
-      @send-api-data="setApiData"
-    />
     <api-data-form
-      v-show="currentStep === 1"
+      v-show="currentStep === 0"
       :isFirstStep="isFirstStep"
       :isLastStep="isLastStep"
       @increment-step="incrementStep"
@@ -18,7 +10,7 @@
     />
 
     <login-form
-      v-show="currentStep === 2"
+      v-show="currentStep === 1"
       :isFirstStep="isFirstStep"
       :isLastStep="isLastStep"
       @increment-step="incrementStep"
@@ -27,7 +19,7 @@
     />
 
     <launcher-view
-      v-if="currentStep === 3"
+      v-if="currentStep === 2"
       :apiId="+apiId"
       :apiHash="apiHash"
       :phoneNumber="phoneNumber"
@@ -46,7 +38,6 @@
 import ApiDataForm from "@/components/forms/ApiDataForm.vue";
 import PhoneNumberForm from "@/components/forms/PhoneNumberForm.vue";
 import LauncherView from "@/components/forms/Launcher.vue";
-import InstructionsView from "@/components/Instructions.vue";
 
 import { authRequest } from "@/api/endpoints";
 
@@ -57,15 +48,14 @@ export default {
     "login-form": PhoneNumberForm,
     ApiDataForm,
     LauncherView,
-    InstructionsView,
   },
 
   mounted() {
     console.log(this.apiId, this.apiHash);
     if (this.tgSession) {
-      this.currentStep = 3;
-    } else if (this.apiId && this.apiHash) {
       this.currentStep = 2;
+    } else if (this.apiId && this.apiHash) {
+      this.currentStep = 1;
     }
   },
 
@@ -154,93 +144,22 @@ export default {
         date,
       });
     },
-
-    // Temporary disabled
-    // While we reach to this method call we already wil be on a 2 step(last one), where we can easily wait for a verification code;
-    // async getVerificationCode() {
-    //   console.log(this.verificationCode);
-
-    //   while (!this.verificationCode) {
-    //     await this.wait(3);
-    //   }
-
-    //   return this.verificationCode;
-    // },
-
-    // async wait(seconds) {
-    //   return new Promise((res) => {
-    //     setTimeout(() => {
-    //       res();
-    //     }, seconds * 1000);
-    //   });
-    // },
-
-    // TODO: check how to save session, so we don't need to login second time;
-    // TODO: send data via form, not prompt
-    // async sendApiData() {
-    //   const session = this.session || new StringSession(""); // You should put your string session here
-    //   const apiId = +this.apiId;
-    //   const apiHash = this.apiHash;
-
-    //   (async () => {
-    //     const client = new TelegramClient(session, apiId, apiHash, {
-    //       connectionRetries: 5,
-    //     });
-
-    //     await client.connect();
-
-    //     // If not logged in
-    //     if (!(await client.checkAuthorization())) {
-    //       await client.start({
-    //         //? password: ,
-    //         phoneNumber: () => this.phoneNumber,
-    //         phoneCode: async () =>
-    //           await prompt("Please, enter verification code from telegram"),
-
-    //         onError: (err) => console.log(err),
-    //       });
-
-    //       console.log("You should now be connected.");
-    //       // Save this string to avoid logging in again
-    //       this.session = client.session.save();
-    //     }
-
-    //     const telegramChannels = ["BeregTime", "lebedevalive"];
-
-    //     telegramChannels.forEach(async (dayn) => {
-    //       const result = await client.invoke(
-    //         new Api.account.ReportPeer({
-    //           peer: dayn,
-    //           reason: new Api.InputReportReasonSpam({}),
-    //           message:
-    //             "Propagand of Terrorism and violence against civil people.",
-    //         })
-    //       );
-
-    //       console.log(result); // prints the result
-    //     });
-    //   })();
-    // },
   },
 };
 </script>
 
 <style>
-.form {
-  &-wrapper {
-    a {
-      -webkit-text-size-adjust: 100%;
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-      font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica,
-        Verdana, sans-serif;
-      font-size: 14px;
-      line-height: 20px;
-      box-sizing: border-box;
-      background: transparent;
-      text-decoration: none;
-      color: #0088cc;
-    }
-  }
+.form-wrapper a {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica,
+    Verdana, sans-serif;
+  font-size: 14px;
+  line-height: 20px;
+  box-sizing: border-box;
+  background: transparent;
+  text-decoration: none;
+  color: #0088cc;
 }
 
 .form-field {
