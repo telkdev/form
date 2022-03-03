@@ -37,11 +37,6 @@ export default {
       required: true,
     },
   },
-  computed: {
-    lastItem() {
-      return this.loggerMessageArray.slice(-1)[0];
-    },
-  },
 };
 </script>
 
