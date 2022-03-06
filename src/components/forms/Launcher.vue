@@ -20,6 +20,7 @@
         {{ $t("btn-clear-data") }}
       </button>
       <button
+        v-if="false"
         @click="handleReconnect"
         :disabled="connected"
         class="btn btn-primary"
@@ -27,13 +28,8 @@
       >
         {{ $t("btn-reconnect") }}
       </button>
-      <button
-        @click="runReporting"
-        :disabled="!connected"
-        class="btn btn-primary"
-        :class="{ disabled: !connected }"
-      >
-        {{ $t("btn-restart") }}
+      <button @click="runReporting" class="btn btn-primary">
+        {{ launched ? $t("btn-restart") : $t("btn-start") }}
       </button>
       <button
         @click="stopReporting"

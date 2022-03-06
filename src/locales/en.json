@@ -41,6 +41,7 @@
   "btn-clear-data": "Clear all data",
   "btn-reconnect": "Reconnect",
   "btn-restart": "Restart",
+  "btn-start": "Start",
   "btn-stop": "Stop",
   "bot-will-be-started": "The bot will be started in a moment...",
   "connection-established": "Connection established",
@@ -59,5 +60,6 @@
   "btn-submit": "Submit",
   "error-auth-wrong-password": "Error: wrong password!",
   "error-unauthorized": "Error: not authorized!",
-  "privacy-note-1": "* Privacy: All sensitive data stored on your device and <br /> not sent to any other services, except phone. For details read info page. <a href='/details'>details</a>"
+  "privacy-note-1": "* Privacy: All sensitive data stored on your device and <br /> not sent to any other services, except phone. For details read info page. <a href='/details'>details</a>",
+  "flood-error":"Telegram was detected flood. Try to use bot after {date}"
 }
