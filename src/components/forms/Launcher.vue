@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="launcher-status">
-      <p>{{ $t("bot-will-be-started") }}</p>
+      <p v-if="!launched">{{ $t("bot-will-be-started") }}</p>
 
       <ul>
         <li>
@@ -28,9 +28,9 @@
       >
         {{ $t("btn-reconnect") }}
       </button>
-      <button @click="runReporting" class="btn btn-primary">
+      <t-button @click="runReporting">
         {{ launched ? $t("btn-restart") : $t("btn-start") }}
-      </button>
+      </t-button>
       <button
         @click="stopReporting"
         :disabled="!launched"
