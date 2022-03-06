@@ -3,11 +3,19 @@
     <ul class="flex flex-wrap justify-end gap-3">
       <li v-html="$t('privacy-note-1')"></li>
       <li>
-         <t-button
+        <t-button
           target="blank"
           href="https://github.com/telkdev/form"
           variant="link"
-          >Github link front-end</t-button
+          class="flex items-center gap-1"
+        >
+          <img
+            :src="require('@/assets/github.svg')"
+            alt=""
+            aria-hidden="true"
+          />
+
+          front-end</t-button
         >
       </li>
       <li>
@@ -15,8 +23,16 @@
           target="blank"
           href="https://github.com/AndrewHaluza/reporter-service"
           variant="link"
-          >Github link back-end</t-button
+          class="flex items-center gap-1"
         >
+          <img
+            :src="require('@/assets/github.svg')"
+            alt=""
+            aria-hidden="true"
+          />
+
+          back-end
+        </t-button>
       </li>
     </ul>
   </div>
