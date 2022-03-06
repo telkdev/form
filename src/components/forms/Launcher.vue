@@ -83,12 +83,19 @@ export default {
   },
   methods: {
     handleClearData() {
-      const result = prompt(this.$t("confirm-delete-data-message"));
-
-      if (result && result === "+") {
-        this.disconnect();
-        this.$emit("clear-data");
-      }
+      this.$dialog
+        .prompt({
+          title: this.$t("confirm-delete-data-title"),
+          text: this.$t("confirm-delete-data-message"),
+          icon: "info",
+          // variant: 'my-confirm',
+        })
+        .then((result) => {
+          if (result && result.input === "+") {
+            this.disconnect();
+            this.$emit("clear-data");
+          }
+        });
     },
 
     handleSubmit() {
