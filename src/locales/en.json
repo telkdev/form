@@ -37,5 +37,15 @@
   "instructions-step-5": "Copy `App api_id` and `App api_hash`,  will needed for start reporting process",
   "instructions-step-6": "pass data into 'Enter api data' form",
   "instructions-show": "Show instructions",
-  "instructions-hide": "Hide instructions"
+  "instructions-hide": "Hide instructions",
+  "btn-clear-data": "Clear all data",
+  "btn-reconnect": "Reconnect",
+  "btn-restart": "Restart",
+  "btn-stop": "Stop",
+  "bot-will-be-started": "The bot will be started in a moment...",
+  "connection-established": "Connection established",
+  "connection-not-established": "Connection not established",
+  "bot-running": "Bot is running",
+  "bot-paused": "Bot is paused",
+  "confirm-delete-data-message": "This action will remove all data in the local storage. You will need to pass all steps again to able launch service again. Do you confirm your decision to remove data? Write `+` (plus sign) to confirm."
 }

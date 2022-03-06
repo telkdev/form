@@ -1,21 +1,23 @@
 <template>
   <div>
     <div class="launcher-status">
-      <p>The bot will be started in a moment</p>
+      <p>{{ $t("bot-will-be-started") }}</p>
 
       <ul>
         <li>
           {{
-            connected ? "Connection established " : "Connection not established"
+            connected
+              ? $t("connection-established")
+              : $t("connection-not-established")
           }}
         </li>
-        <li>{{ launched ? "Bot is running" : "Bot is paused" }}</li>
+        <li>{{ launched ? $t("bot-running") : $t("bot-paused") }}</li>
       </ul>
     </div>
 
     <div class="btn-wrapper">
       <button @click="handleClearData" class="btn btn-secondary">
-        Clear all data
+        {{ $t("btn-clear-data") }}
       </button>
       <button
         @click="handleReconnect"
@@ -23,7 +25,7 @@
         class="btn btn-primary"
         :class="{ disabled: connected }"
       >
-        Reconnect
+        {{ $t("btn-reconnect") }}
       </button>
       <button
         @click="runReporting"
@@ -31,7 +33,7 @@
         class="btn btn-primary"
         :class="{ disabled: !connected }"
       >
-        Restart
+        {{ $t("btn-restart") }}
       </button>
       <button
         @click="stopReporting"
@@ -39,7 +41,7 @@
         class="btn btn-secondary"
         :class="{ disabled: !launched }"
       >
-        Stop
+        {{ $t("btn-stop") }}
       </button>
     </div>
   </div>
@@ -81,9 +83,7 @@ export default {
   },
   methods: {
     handleClearData() {
-      const result = prompt(
-        "This action will remove all data in the local storage. You will need to pass all steps again to able launch service again. Do you confirm your decision to remove data? Write `+` (plus sign) to confirm."
-      );
+      const result = prompt(this.$t("confirm-delete-data-message"));
 
       if (result && result === "+") {
         this.disconnect();
