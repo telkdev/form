@@ -39,5 +39,6 @@ export async function httpRequest({ url, data, method, params, headers = {} }) {
     return result;
   } catch (error) {
     console.error(error);
+    throw error.response;
   }
 }

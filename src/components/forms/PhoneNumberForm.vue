@@ -6,7 +6,7 @@
     v-slot="{ invalid }"
     @submit.prevent
   >
-    <h1>{{$t('sign-up')}}</h1>
+    <h1>{{ $t("sign-up") }}</h1>
     <ValidationProvider
       class="form-field"
       tag="div"
@@ -15,7 +15,7 @@
       v-slot="{ errors }"
       rules="required|phone"
     >
-      <label for="phoneNumber">Enter phone number</label>
+      <label for="phoneNumber">{{ $t("enter-phone-number") }}</label>
       <input
         v-model="phoneNumber"
         type="text"
@@ -38,13 +38,13 @@
       v-slot="{ errors }"
       rules="required"
     >
-      <label for="password">Create password (not from Telegram, just random)</label>
+      <label for="password">{{ $t("enter-password") }}</label>
       <input
         v-model="password"
         type="password"
         class="form-control input-large"
         id="password"
-        placeholder="some-random-password"
+        :placeholder="$t('placeholder-password')"
         autocomplete="off"
       />
 
@@ -97,8 +97,6 @@ export default {
         phoneNumber: this.phoneNumber,
         password: this.password,
       };
-
-      this.$emit("increment-step");
 
       this.$emit("send-phone-data", payload);
     },

@@ -6,7 +6,7 @@
     v-slot="{ invalid }"
     @submit.prevent
   >
-    <h1>Enter api data</h1>
+    <h1>{{$t("enter-api-data")}}</h1>
     <ValidationProvider
       class="form-field"
       tag="div"
@@ -16,7 +16,7 @@
       v-slot="{ errors }"
       rules="required|min:5"
     >
-      <label for="apiId">App api_id: </label>
+      <label for="apiId">{{$t("enter-app-api-id")}}: </label>
       <input
         v-model="apiId"
         type="text"
@@ -39,7 +39,7 @@
       v-slot="{ errors }"
       rules="required|min:15"
     >
-      <label for="apiHash">App api_hash: </label>
+      <label for="apiHash">{{$t("enter-app-api-hash")}}: </label>
       <input
         v-model="apiHash"
         type="password"
