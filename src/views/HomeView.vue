@@ -6,7 +6,7 @@
           @send-logger-message="handleLoggerMessage"
           class="flex-grow"
         />
-        <stats class="md:pl-4"/>
+        <stats @send-logger-message="handleLoggerMessage" class="md:pl-4"/>
       </div>
       <div class="flex justify-between flex-wrap items-center gap-4">
         <instructions-view class="page-instructions-wrapper" />
