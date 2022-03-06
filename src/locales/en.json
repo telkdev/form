@@ -14,7 +14,7 @@
   "message-logger": "Message Logger",
   "logger-placeholder": "Here will be messages after bot initialization...",
   "unable-to-connect-try-reconnect": "Unable to connect. Try to reconnect",
-  "sent-report":"was sent report",
+  "sent-report": "was sent report",
   "reason-1-1": "Propaganda of the war in Ukraine. ",
   "reason-1-2": "Propaganda of the murder of Ukrainians and Ukrainian soldiers. ",
   "reason-1-3": "Dissemination of military personal data. ",
@@ -26,5 +26,16 @@
   "reason-2-2": "Block it as soon as possible! ",
   "reason-2-3": "Ban this channel please ",
   "reason-2-4": "It would be helpful if you ban this channel ",
-  "reason-2-5": "This channel is violating Telegram rules and must be stopped "
+  "reason-2-5": "This channel is violating Telegram rules and must be stopped ",
+  "instructions-title": "Instructions:",
+  "instructions-description": "This application was created to stop Russian propaganda, which is spreading in Telegram channels. Allows you to automatically send reports to channels.",
+  "instructions-warning": "* Don't share `App api_id` and `Short name` to any!!! They can give access to your personal Telegram account",
+  "instructions-step-1": "Go to",
+  "instructions-step-2": "Pass phone number and authorization code",
+  "instructions-step-3": "Go to",
+  "instructions-step-4": "Enter `App title` and `Short name` then submit",
+  "instructions-step-5": "Copy `App api_id` and `App api_hash`,  will needed for start reporting process",
+  "instructions-step-6": "pass data into 'Enter api data' form",
+  "instructions-show": "Show instructions",
+  "instructions-hide": "Hide instructions"
 }
