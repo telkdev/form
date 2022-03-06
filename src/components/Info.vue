@@ -3,19 +3,19 @@
     <ul class="flex flex-wrap justify-end gap-3">
       <li v-html="$t('privacy-note-1')"></li>
       <li>
-        <a
+         <t-button
           target="blank"
           href="https://github.com/telkdev/form"
-          class="btn btn-primary"
-          >Github link front-end</a
+          variant="link"
+          >Github link front-end</t-button
         >
       </li>
       <li>
-        <a
+        <t-button
           target="blank"
           href="https://github.com/AndrewHaluza/reporter-service"
-          class="btn btn-primary"
-          >Github link back-end</a
+          variant="link"
+          >Github link back-end</t-button
         >
       </li>
     </ul>
