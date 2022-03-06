@@ -6,7 +6,7 @@
           @send-logger-message="handleLoggerMessage"
           class="page-form-wrapper"
         />
-        <stats />
+        <stats @send-logger-message="handleLoggerMessage" />
       </div>
       <div class="flex justify-between flex-wrap items-center gap-4">
         <instructions-view class="page-instructions-wrapper" />

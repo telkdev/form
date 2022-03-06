@@ -22,12 +22,12 @@ export default {
     setInterval(this.getStats(), 30000);
   },
   methods: {
-    handleLoggerMessage({ message, type, date }) {
-      if (type === "error") {
-        console.error(message);
-      }
-
-      this.loggerMessageArray.unshift({ message, type, date });
+    handleLoggerMessage(message, type) {
+      this.$emit("send-logger-message", {
+        message,
+        type,
+        date: new Date(),
+      });
     },
 
     async apiRequest(req, options) {
@@ -37,14 +37,10 @@ export default {
         return res;
       } catch (error) {
         if (error.status === 401) {
-          this.sendMessage(this.$t("error-unauthorized"), "error");
-          // localStorage.removeItem("accessToken");
-          // this.disconnect();
-          // return this.handleCancel();
+          this.handleLoggerMessage(this.$t("error-unauthorized"), "error");
+        } else {
+          this.handleLoggerMessage(this.$t("error-with-channels-api"), "error");
         }
-
-        // this.sendMessage(this.$t("error-with-channels-api"), "error");
-        // this.disconnect();
 
         throw error;
       }
