@@ -1,30 +1,30 @@
 <template>
-  <div class="page" id="app">
-    <header class="header page-header">
-      <div class="header-inner flex items-center justify-between p-4">
-        <span class="text-black text-4xl">Korabel</span>
-        <locale-changer />
+  <div class="flex flex-col" id="app">
+    <header class="bg-gray-500">
+      <div class="container p-4">
+        <div class="mb-4 flex items-center justify-between gap-4">
+          <span class="text-black text-4xl">Korabel</span>
+        </div>
+        <div>
+          <locale-changer />
+          <info-view class="page-info-wrapper" />
+        </div>
       </div>
     </header>
-    <main class="page-main">
-      <div class="page-inner">
+
+    <main class="flex-grow">
+      <div class="container p-4">
         <form-wrapper
           @send-logger-message="handleLoggerMessage"
           class="page-form-wrapper"
         />
-        <instructions-view class="page-instructions-wrapper" />
-
-        <logger-wrapper
-          :loggerMessageArray="loggerMessageArray"
-          class="page-logger-wrapper"
-        />
+        <instructions-view class="page-instructions-wrapper hidden" />
       </div>
     </main>
-    <footer class="footer page-footer">
-      <div class="footer-inner">
-        <info-view class="page-info-wrapper" />
-      </div>
-    </footer>
+    <logger-wrapper
+      :loggerMessageArray="loggerMessageArray"
+      class="page-logger-wrapper overflow-y-auto overflow-x-hidden h-72 p-4"
+    />
   </div>
 </template>
 
@@ -64,78 +64,10 @@ export default {
 <style>
 html,
 body,
-.page,
-.page-inner {
+#app {
   height: 100%;
 }
 
-body {
-  margin: 0;
-  background: #fafafa;
-}
-
-ul,
-li {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.page {
-  color: #333;
-  font: 12px/18px "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica,
-    Verdana, sans-serif;
-  font-size: 16px;
-  line-height: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.page-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.header,
-.footer {
-  background-color: rgb(27, 139, 70);
-}
-
-.header-inner,
-.footer-inner {
-  max-width: 1500px;
-  margin: 0 auto;
-  width: 100%;
-  padding: 15px;
-}
-
-.page-main {
-  flex-grow: 1;
-}
-
-@media (max-width: 1200px) {
-}
-
-.page-info-wrapper {
-}
-
-.page-instructions-wrapper {
-  padding: 15px;
-}
-
-.page-form-wrapper {
-  padding: 15px;
-}
-
-.page-logger-wrapper {
-  padding: 15px;
-  height: 330px;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
 .page-logger-wrapper::-webkit-scrollbar {
   width: 10px;
   background-color: auto;

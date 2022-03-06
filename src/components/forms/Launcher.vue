@@ -21,6 +21,7 @@
         @click="handleReconnect"
         :disabled="connected"
         class="btn btn-primary"
+        :class="{ disabled: connected }"
       >
         Reconnect
       </button>
@@ -28,6 +29,7 @@
         @click="runReporting"
         :disabled="!connected"
         class="btn btn-primary"
+        :class="{ disabled: !connected }"
       >
         Restart
       </button>
@@ -35,6 +37,7 @@
         @click="stopReporting"
         :disabled="!launched"
         class="btn btn-secondary"
+        :class="{ disabled: !launched }"
       >
         Stop
       </button>
