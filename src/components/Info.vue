@@ -1,10 +1,7 @@
 <template>
   <div class="flex justify-end">
     <ul class="flex flex-wrap justify-end gap-3">
-      <li>
-        * Privacy: All sensitive data stored on your device and <br />
-        not sent to any other services!
-      </li>
+      <li v-html="$t('privacy-note-1')"></li>
       <li>
          <t-button
           target="blank"
