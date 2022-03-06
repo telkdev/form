@@ -14,7 +14,7 @@
   "message-logger": "Message Logger",
   "logger-placeholder": "Here will be messages after bot initialization...",
   "unable-to-connect-try-reconnect": "Unable to connect. Try to reconnect",
-  "sent-report":"was sent report",
+  "sent-report": "was sent report",
   "reason-1-1": "Propaganda of the war in Ukraine. ",
   "reason-1-2": "Propaganda of the murder of Ukrainians and Ukrainian soldiers. ",
   "reason-1-3": "Dissemination of military personal data. ",
@@ -26,5 +26,15 @@
   "reason-2-2": "Block it as soon as possible! ",
   "reason-2-3": "Ban this channel please ",
   "reason-2-4": "It would be helpful if you ban this channel ",
-  "reason-2-5": "This channel is violating Telegram rules and must be stopped "
+  "reason-2-5": "This channel is violating Telegram rules and must be stopped ",
+  "btn-clear-data": "Clear all data",
+  "btn-reconnect": "Reconnect",
+  "btn-restart": "Restart",
+  "btn-stop": "Stop",
+  "bot-will-be-started": "The bot will be started in a moment...",
+  "connection-established": "Connection established",
+  "connection-not-established": "Connection not established",
+  "bot-running": "Bot is running",
+  "bot-paused": "Bot is paused",
+  "confirm-delete-data-message":"This action will remove all data in the local storage. You will need to pass all steps again to able launch service again. Do you confirm your decision to remove data? Write `+` (plus sign) to confirm."
 }
