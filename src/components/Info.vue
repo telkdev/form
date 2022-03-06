@@ -2,23 +2,23 @@
   <div class="flex justify-end">
     <ul class="flex flex-wrap justify-end gap-3">
       <li>
-        * Privacy: All sensitive data stored on your device and <br /> not sent to any
-        other services!
+        * Privacy: All sensitive data stored on your device and <br />
+        not sent to any other services!
       </li>
       <li>
-        <a
+         <t-button
           target="blank"
           href="https://github.com/telkdev/form"
-          class="btn btn-primary"
-          >Github link front-end</a
+          variant="link"
+          >Github link front-end</t-button
         >
       </li>
       <li>
-        <a
+        <t-button
           target="blank"
           href="https://github.com/AndrewHaluza/reporter-service"
-          class="btn btn-primary"
-          >Github link back-end</a
+          variant="link"
+          >Github link back-end</t-button
         >
       </li>
     </ul>
