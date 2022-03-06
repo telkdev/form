@@ -1,15 +1,16 @@
 <template>
   <main class="flex-grow flex flex-col h-full">
-    <div class="container p-4 flex-grow">
+    <div class="container p-4 flex-grow flex flex-col justify-between">
+      
+      <form-wrapper
+        @send-logger-message="handleLoggerMessage"
+        class="page-form-wrapper"
+      />
       <div class="flex justify-between flex-wrap items-center">
         <instructions-view class="page-instructions-wrapper" />
 
         <info-view class="page-info-wrapper" />
       </div>
-      <form-wrapper
-        @send-logger-message="handleLoggerMessage"
-        class="page-form-wrapper"
-      />
     </div>
     <logger-wrapper
       :loggerMessageArray="loggerMessageArray"
