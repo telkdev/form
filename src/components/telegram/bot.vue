@@ -1,5 +1,5 @@
 <script>
-const { Api, TelegramClient } = require("telegram");
+const { Api, TelegramClient, errors: TgErrors } = require("telegram");
 const { StringSession } = require("telegram/sessions");
 
 import { getChannels, saveReported } from "@/api/endpoints";
@@ -13,17 +13,20 @@ export default {
   data() {
     return {
       sessionKey: "tgSession",
+      floodDateKey: "floodDate",
       client: null,
       connected: null,
       launched: null,
       verificationCode: null,
       errorCounter: 0,
       channelsList: [],
+      floodDate: this.getFloodDate(),
     };
   },
-  computed: {},
 
   async mounted() {
+    if (!this.checkFloodDate()) return;
+
     await this.initializeConnection();
 
     if (this.connected) {
@@ -34,6 +37,26 @@ export default {
   methods: {
     setPhoneData(payload) {
       this.phoneNumber = payload.phoneNumber;
+    },
+
+    getFloodDate() {
+      const date = localStorage.getItem("floodDate");
+
+      if (!date) {
+        return null;
+      }
+
+      return new Date(+date);
+    },
+
+    setFloodDate(seconds) {
+      const nowMs = Date.now();
+      const waitMs = seconds * 1000;
+      const value = nowMs + waitMs;
+
+      this.floodDate = new Date(value);
+
+      localStorage.setItem(this.floodDateKey, value);
     },
 
     getSession() {
@@ -163,9 +186,47 @@ export default {
       });
     },
 
+    incrementError() {
+      this.errorCounter += 1;
+    },
+
+    decrementError() {
+      const { errorCounter } = this;
+
+      if (errorCounter !== 0) {
+        this.errorCounter -= 1;
+      }
+    },
+
+    checkFloodDate() {
+      if (!this.floodDate) {
+        return true;
+      }
+
+      const floodDateMs = this.floodDate.getTime();
+      const nowMs = Date.now();
+
+      if (nowMs < floodDateMs) {
+        this.disconnect();
+        this.sendMessage(
+          this.$t("flood-error", {
+            date: this.floodDate.toLocaleString("en-US"),
+          }),
+          "error"
+        );
+
+        return false;
+      }
+
+      return true;
+    },
+
     async processChannel(channelName) {
+      const randomSec = this.randomInRange(30, 60);
+
       try {
-        const randomSec = this.randomInRange(30, 60);
+        if (!this.checkFloodDate()) return;
+
         const message = this.getRandomReason();
 
         await this.reportChannel(channelName, message);
@@ -177,13 +238,30 @@ export default {
         );
 
         await this.wait(randomSec);
+        this.decrementError();
       } catch (err) {
+        if (err instanceof TgErrors.FloodWaitError) {
+          this.setFloodDate(err.seconds);
+        }
+
+        this.incrementError();
+
         this.sendMessage(err.message, "error");
+
+        if (this.errorCounter >= 5) {
+          this.sendMessage(this.$t("stopped-by-error-series"), "error");
+          this.errorCounter = 0;
+          this.stopReporting();
+        }
+
+        await this.wait(randomSec);
       }
     },
 
-    async handleReconnect() {
-      return this.initializeConnection();
+    async handleConnection() {
+      if (!this.client || !this.connected) {
+        return this.initializeConnection();
+      }
     },
 
     async stopReporting() {
@@ -232,6 +310,8 @@ export default {
     async runReporting() {
       this.sendMessage(this.$t("reporting-launched"), "warn");
 
+      await this.handleConnection();
+
       if (!this.connected) {
         return this.sendMessage(
           this.$t("couldnt-launch-without-connection"),
@@ -244,28 +324,16 @@ export default {
       await this.getChannelsList();
 
       for (let i = 0; i < this.channelsList.length; i += 1) {
-        try {
-          if (!this.launched) {
-            this.sendMessage(this.$t("reporting-stopped"), "warn");
+        if (!this.launched) {
+          this.sendMessage(this.$t("reporting-stopped"), "warn");
 
-            /** exit */
-            return;
-          }
-
-          const channel = this.channelsList[i];
-
-          await this.processChannel(channel.name);
-        } catch (err) {
-          this.errorCounter += 1;
-
-          this.sendMessage(err.message, "error");
-
-          if ((this.errorCounter += 5)) {
-            this.sendMessage(this.$t("stopped-by-error-series"), "error");
-            this.errorCounter = 0;
-            this.stopReporting();
-          }
+          /** exit */
+          return;
         }
+
+        const channel = this.channelsList[i];
+
+        await this.processChannel(channel.name);
       }
     },
   },
