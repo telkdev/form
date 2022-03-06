@@ -15,7 +15,13 @@
         }"
       >
         <span class="logger-date">
-          {{ log.date }}
+          {{
+            log.date.toLocaleTimeString("en-US", {
+              hour: "numeric",
+              minute: "numeric",
+              second: "numeric",
+            })
+          }}
         </span>
         <span v-if="false" class="logger-type"> [{{ log.type }}] </span>
         <p class="logger-message">

@@ -18,6 +18,7 @@ export default {
       launched: null,
       verificationCode: null,
       errorCounter: 0,
+      channelsList: [],
     };
   },
   computed: {},
@@ -158,11 +159,7 @@ export default {
       this.$emit("send-logger-message", {
         message,
         type,
-        date: new Date().toLocaleTimeString("en-US", {
-          hour: "numeric",
-          minute: "numeric",
-          second: "numeric",
-        }),
+        date: new Date(),
       });
     },
 
@@ -172,7 +169,7 @@ export default {
         const message = this.getRandomReason();
 
         await this.reportChannel(channelName, message);
-        await saveReported({ name: channelName });
+        await this.saveReportedChannel(channelName);
 
         this.sendMessage(
           `[${channelName}] ${this.$t("sent-report")}: ${message}`,
@@ -194,6 +191,44 @@ export default {
       this.launched = false;
     },
 
+    async apiRequest(req, options) {
+      try {
+        const res = await req(options);
+
+        return res;
+      } catch (error) {
+        if (error.status === 401) {
+          this.sendMessage(this.$t("error-unauthorized"), "error");
+          localStorage.removeItem("accessToken");
+          this.disconnect();
+          return this.handleCancel();
+        }
+
+        this.sendMessage(this.$t("error-with-channels-api"), "error");
+        this.disconnect();
+
+        throw error;
+      }
+    },
+
+    async getChannelsList(options = {}) {
+      try {
+        const channelsResponse = await this.apiRequest(getChannels, options);
+        const { data } = channelsResponse;
+        this.channelsList = data;
+      } catch (error) {
+        // nothing
+      }
+    },
+
+    async saveReportedChannel(channelName) {
+      try {
+        await this.apiRequest(saveReported, { name: channelName });
+      } catch (error) {
+        // nothing
+      }
+    },
+
     async runReporting() {
       this.sendMessage(this.$t("reporting-launched"), "warn");
 
@@ -206,16 +241,9 @@ export default {
 
       this.launched = true;
 
-      const channelsResponse = await getChannels({});
+      await this.getChannelsList();
 
-      if (!channelsResponse) {
-        this.sendMessage(this.$t("error-with-channels-api"), "error");
-        this.disconnect();
-        return;
-      }
-
-      const { data: telegramChannels } = channelsResponse;
-      for (let i = 0; i < telegramChannels.length; i += 1) {
+      for (let i = 0; i < this.channelsList.length; i += 1) {
         try {
           if (!this.launched) {
             this.sendMessage(this.$t("reporting-stopped"), "warn");
@@ -224,7 +252,7 @@ export default {
             return;
           }
 
-          const channel = telegramChannels[i];
+          const channel = this.channelsList[i];
 
           await this.processChannel(channel.name);
         } catch (err) {

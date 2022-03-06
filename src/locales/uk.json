@@ -55,5 +55,7 @@
   "enter-password": "Введіть пароль (не від Telegram! Необхідний для аутентифікації користувача в цьому додатку)",
   "placeholder-password": "приклад: ds34qwea!e5qa",
   "btn-cancel": "Відміна",
-  "btn-submit": "Далі"
+  "btn-submit": "Далі",
+  "error-auth-wrong-password": "Помилка: невірний пароль!",
+  "error-unauthorized": "Помилка: Користувач не авторизований в додатку!"
 }

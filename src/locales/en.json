@@ -55,5 +55,7 @@
   "enter-password": "Enter password (not from Telegram, for this app authentication)",
   "placeholder-password": "eg. ds34qwea!e5qa",
   "btn-cancel": "Cancel",
-  "btn-submit": "Submit"
+  "btn-submit": "Submit",
+  "error-auth-wrong-password": "Error: wrong password!",
+  "error-unauthorized": "Error: not authorized!"
 }

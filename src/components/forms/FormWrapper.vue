@@ -51,7 +51,7 @@ export default {
   },
 
   mounted() {
-    if (this.tgSession) {
+    if (this.tgSession && this.accessToken) {
       this.currentStep = 2;
     } else if (this.apiId && this.apiHash) {
       this.currentStep = 1;
@@ -66,6 +66,7 @@ export default {
       apiId: localStorage.getItem("apiId"),
       apiHash: localStorage.getItem("apiHash"),
       phoneNumber: localStorage.getItem("phoneNumber"),
+      accessToken: localStorage.getItem("accessToken"),
       password: localStorage.getItem("password"),
 
       verificationCode: null,
@@ -124,16 +125,24 @@ export default {
     },
 
     async sendAuthRequest() {
-      const user = await authRequest({
-        login: this.phoneNumber,
-        password: this.password,
-      });
+      try {
+        await authRequest({
+          login: this.phoneNumber,
+          password: this.password,
+        });
 
-      if (!user) {
+        this.incrementStep();
+      } catch (err) {
+        if (err.status === 401) {
+          return this.handleLoggerMessage({
+            message: this.$t("error-auth-wrong-password"),
+            type: "error",
+          });
+        }
+
         this.handleLoggerMessage({
           message: this.$t("error-with-auth-api"),
           type: "error",
-          date: new Date(),
         });
       }
     },
@@ -142,7 +151,7 @@ export default {
       this.verificationCode = payload.verificationCode;
     },
 
-    handleLoggerMessage({ message, type, date }) {
+    handleLoggerMessage({ message, type, date = new Date() }) {
       this.$emit("send-logger-message", {
         message,
         type,
