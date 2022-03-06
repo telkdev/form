@@ -1,24 +1,27 @@
 <template>
   <div class="flex flex-col" id="app">
     <header class="bg-gray-500">
-      <div class="container p-4">
-        <div class="mb-4 flex items-center justify-between gap-4">
+      <div class="container p-4 flex items-center justify-between gap-4">
+        <div class="">
           <span class="text-black text-4xl">Korabel</span>
         </div>
-        <div>
+        <div class="flex flex-col items-end gap-4">
           <locale-changer />
-          <info-view class="page-info-wrapper" />
         </div>
       </div>
     </header>
 
     <main class="flex-grow">
       <div class="container p-4">
+        <div class="flex justify-between flex-wrap items-center">
+          <instructions-view class="page-instructions-wrapper" />
+
+          <info-view class="page-info-wrapper" />
+        </div>
         <form-wrapper
           @send-logger-message="handleLoggerMessage"
           class="page-form-wrapper"
         />
-        <instructions-view class="page-instructions-wrapper hidden" />
       </div>
     </main>
     <logger-wrapper

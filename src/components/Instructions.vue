@@ -18,7 +18,7 @@
       </button>
     </div>
 
-    <div v-if="isShow" class="content">
+    <div v-if="isShow" class="content hidden">
       <div v-if="activeTab === 0" class="tabcontent">
         <h2>Instructions:</h2>
         <h3>
