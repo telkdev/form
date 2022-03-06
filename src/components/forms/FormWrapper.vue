@@ -136,8 +136,6 @@ export default {
           date: new Date(),
         });
       }
-
-      console.log(user);
     },
 
     setVerificationCodeData(payload) {

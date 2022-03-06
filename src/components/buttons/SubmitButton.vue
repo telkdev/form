@@ -5,7 +5,7 @@
     :class="{ disabled: isDisabled }"
     class="btn btn-primary btn-lg"
   >
-    Submit
+    {{ $t("btn-submit") }}
   </button>
 </template>
 

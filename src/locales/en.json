@@ -36,5 +36,13 @@
   "connection-not-established": "Connection not established",
   "bot-running": "Bot is running",
   "bot-paused": "Bot is paused",
-  "confirm-delete-data-message":"This action will remove all data in the local storage. You will need to pass all steps again to able launch service again. Do you confirm your decision to remove data? Write `+` (plus sign) to confirm."
+  "confirm-delete-data-message": "This action will remove all data in the local storage. You will need to pass all steps again to able launch service again. Do you confirm your decision to remove data? Write `+` (plus sign) to confirm.",
+  "enter-api-data": "Enter API data",
+  "enter-app-api-id": "App api_id",
+  "enter-app-api-hash": "App api_hash",
+  "enter-phone-number": "Enter phone number",
+  "enter-password": "Enter password (not from Telegram, for this app authentication)",
+  "placeholder-password": "eg. ds34qwea!e5qa",
+  "btn-cancel": "Cancel",
+  "btn-submit": "Submit"
 }

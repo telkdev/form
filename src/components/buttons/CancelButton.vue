@@ -5,7 +5,7 @@
     :class="{ disabled: isDisabled }"
     class="btn btn-secondary btn-lg"
   >
-    Cancel
+    {{ $t("btn-cancel") }}
   </button>
 </template>
 
