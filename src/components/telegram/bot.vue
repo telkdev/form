@@ -88,11 +88,15 @@ export default {
         await this.client.start({
           phoneNumber: this.phoneNumber,
           phoneCode: async () => {
-            this.verificationCode = await prompt(
-              this.$t("enter-telegram-code")
-            );
+            const result = await this.$dialog.prompt({
+              title: this.$t("enter-telegram-code"),
+            });
 
-            return this.verificationCode;
+            if (result && result.input !== "") {
+              this.verificationCode = result.input;
+
+              return this.verificationCode;
+            }
           },
           onError: (err) => {
             this.sendMessage(err.message, "error");
