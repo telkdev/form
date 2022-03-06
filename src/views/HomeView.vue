@@ -1,12 +1,12 @@
 <template>
   <main class="flex-grow flex flex-col h-full">
-    <div class="container p-4 flex-grow flex flex-col justify-between">
-      <div>
+    <div class="container p-4 flex-grow flex flex-col justify-between gap-4">
+      <div class="flex flex-col md:flex-row gap-4 justify-between">
         <form-wrapper
           @send-logger-message="handleLoggerMessage"
-          class="page-form-wrapper"
+          class="flex-grow"
         />
-        <stats />
+        <stats class="md:pl-4"/>
       </div>
       <div class="flex justify-between flex-wrap items-center gap-4">
         <instructions-view class="page-instructions-wrapper" />
