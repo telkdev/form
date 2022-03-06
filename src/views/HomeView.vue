@@ -22,7 +22,7 @@
 import FormWrapper from "@/components/forms/FormWrapper.vue";
 import LoggerWrapper from "@/components/logger/LoggerWrapper.vue";
 import InfoView from "@/components/Info.vue";
-import InstructionsView from "@/components/Instructions.vue";
+import InstructionsView from "@/components/instructions/Instructions.vue";
 
 export default {
   name: "HomeView",
