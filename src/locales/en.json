@@ -11,6 +11,20 @@
   "connected": "Connected",
   "connecting": "Connecting...",
   "enter-telegram-code": "Enter code sent by Telegram",
-  "message-logger":"Message Logger",
-  "logger-placeholder":"Here will be messages after bot initialization..."
+  "message-logger": "Message Logger",
+  "logger-placeholder": "Here will be messages after bot initialization...",
+  "unable-to-connect-try-reconnect": "Unable to connect. Try to reconnect",
+  "sent-report":"was sent report",
+  "reason-1-1": "Propaganda of the war in Ukraine. ",
+  "reason-1-2": "Propaganda of the murder of Ukrainians and Ukrainian soldiers. ",
+  "reason-1-3": "Dissemination of military personal data. ",
+  "reason-1-4": "The channel undermines the integrity of the Ukrainian state. ",
+  "reason-1-5": "Spreading fake news, misleading people. ",
+  "reason-1-6": "Propaganda of violence and russian aggression. ",
+  "reason-1-7": "Dangerous fake news from russian propagandist against Ukraine. ",
+  "reason-2-1": "Block the channel! ",
+  "reason-2-2": "Block it as soon as possible! ",
+  "reason-2-3": "Ban this channel please ",
+  "reason-2-4": "It would be helpful if you ban this channel ",
+  "reason-2-5": "This channel is violating Telegram rules and must be stopped "
 }
