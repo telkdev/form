@@ -6,5 +6,12 @@ module.exports = {
     },
     extend: {},
   },
-  plugins: [require("@tailwindcss/forms")],
+  typography: {
+    default: {
+      css: {
+        maxWidth: '70vw',
+      },
+    },
+  },
+  plugins: [require("@tailwindcss/forms"), require("@tailwindcss/typography")],
 };

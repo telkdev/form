@@ -1,11 +1,11 @@
 <template>
   <div>
-    <h2 class="text-3xl font-bold mb-2">{{ $t("instructions-title") }}</h2>
-    <h3 class="text-xl mb-3">
+    <h2 class="">{{ $t("instructions-title") }}</h2>
+    <h3 class="">
       {{ $t("instructions-description") }}
     </h3>
 
-    <ul class="space-y-2 text-lg mb-3">
+    <ol class=" mb-3">
       <li
         v-html="
           $t('instructions-step-1', {
@@ -24,9 +24,9 @@
       <li>{{ $t("instructions-step-4") }}</li>
       <li>{{ $t("instructions-step-5") }}</li>
       <li>{{ $t("instructions-step-6") }}</li>
-    </ul>
+    </ol>
 
-    <p class="font-bold italic">
+    <p class="">
       {{ $t("instructions-warning") }}
     </p>
   </div>

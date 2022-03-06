@@ -1,8 +1,8 @@
 <template>
   <div class="about">
-    <div class="container p-3">
-      <h1 class="text-3xl font-bold mb-2">{{ $t("about-page") }}</h1>
-      <h2 class="text-3xl font-bold mb-2">{{ $t("about-what-for") }}</h2>
+    <div class="container p-3 md:p-5 xl:py-7 prose prose-zin lg:prose-xl">
+      <h1 class="">{{ $t("about-page") }}</h1>
+      <h2 class="">{{ $t("about-what-for") }}</h2>
       <div
         v-html="
           $t('about-description', {
@@ -11,7 +11,7 @@
         "
       ></div>
 
-      <h2 class="text-3xl font-bold mb-2">
+      <h2 class="">
         {{ $t("check-instructions-first") }}
       </h2>
       <instructions-content />
@@ -38,3 +38,16 @@ export default {
   },
 };
 </script>
+
+// TODO: FIX THIS;
+<style scoped>
+.prose {
+  max-width: 70vw !important;
+}
+
+@media (max-width: 600px) {
+  .prose {
+    max-width: 100% !important;
+  }
+}
+</style>
