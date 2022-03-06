@@ -1,10 +1,13 @@
 <template>
   <main class="flex-grow flex flex-col h-full">
     <div class="container p-4 flex-grow flex flex-col justify-between">
-      <form-wrapper
-        @send-logger-message="handleLoggerMessage"
-        class="page-form-wrapper"
-      />
+      <div>
+        <form-wrapper
+          @send-logger-message="handleLoggerMessage"
+          class="page-form-wrapper"
+        />
+        <stats />
+      </div>
       <div class="flex justify-between flex-wrap items-center gap-4">
         <instructions-view class="page-instructions-wrapper" />
 
@@ -12,9 +15,6 @@
       </div>
     </div>
 
-    <h3>{{ $t("stats-requests") }}:</h3>
-    <span> {{ $t("stats-general") }} - {{ stats.general }} </span>
-    <span> {{ $t("stats-personal") }} - {{ stats.personal }} </span>
     <logger-wrapper
       :loggerMessageArray="loggerMessageArray"
       class="page-logger-wrapper overflow-y-auto overflow-x-hidden h-72 p-4"
@@ -24,8 +24,8 @@
 <script>
 import FormWrapper from "@/components/forms/FormWrapper.vue";
 import LoggerWrapper from "@/components/logger/LoggerWrapper.vue";
+import Stats from "@/components/stats/Stats.vue";
 import InfoView from "@/components/Info.vue";
-import { getReportStats } from "@/api/endpoints";
 import InstructionsView from "@/components/instructions/Instructions.vue";
 
 export default {
@@ -35,15 +35,12 @@ export default {
     FormWrapper,
     LoggerWrapper,
     InstructionsView,
+    Stats,
   },
   data() {
     return {
       loggerMessageArray: [],
-      stats: { general: 0, personal: 0 },
     };
-  },
-  async mounted() {
-    setInterval(this.getStats(), 30000);
   },
   methods: {
     handleLoggerMessage({ message, type, date }) {
@@ -52,37 +49,6 @@ export default {
       }
 
       this.loggerMessageArray.unshift({ message, type, date });
-    },
-
-    async apiRequest(req, options) {
-      try {
-        const res = await req(options);
-
-        return res;
-      } catch (error) {
-        if (error.status === 401) {
-          this.sendMessage(this.$t("error-unauthorized"), "error");
-          // localStorage.removeItem("accessToken");
-          // this.disconnect();
-          // return this.handleCancel();
-        }
-
-        // this.sendMessage(this.$t("error-with-channels-api"), "error");
-        // this.disconnect();
-
-        throw error;
-      }
-    },
-
-    async getStats() {
-      try {
-        const statsResponse = await this.apiRequest(getReportStats);
-        const { data } = statsResponse;
-
-        this.stats = data;
-      } catch (error) {
-        // nothing
-      }
     },
   },
 };
