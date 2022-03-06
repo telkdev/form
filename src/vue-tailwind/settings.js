@@ -39,7 +39,7 @@ const VueTailwindSettings = {
           "z-40  overflow-auto scrolling-touch left-0 top-0 bottom-0 right-0 w-full h-full fixed bg-opacity-50",
         wrapper: "relative mx-auto z-50 max-w-lg px-3 py-12",
         modal: "overflow-visible relative  rounded",
-        body: "p-3",
+        body: "p-2 md:p-4 xl:p-5",
         header: "border-b p-3 rounded-t",
         footer: " p-3 rounded-b",
         close:
@@ -49,7 +49,7 @@ const VueTailwindSettings = {
         overlay: "bg-black",
         wrapper: "",
         modal: "bg-white shadow",
-        body: "p-3",
+        body: "",
         header: "border-gray-100",
         footer: "bg-gray-100",
         close: "bg-gray-100 text-gray-600 hover:bg-gray-200",
