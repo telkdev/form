@@ -2,7 +2,9 @@
   <div>
     <h3>{{ $t("stats-requests") }}:</h3>
     <span> {{ $t("stats-general") }} - {{ stats.general }} </span>
-    <span> {{ $t("stats-personal") }} - {{ stats.personal }} </span>
+    <span v-if="stats.personal">
+      {{ $t("stats-personal") }} - {{ stats.personal }}
+    </span>
   </div>
 </template>
 
@@ -53,7 +55,11 @@ export default {
         const statsResponse = await this.apiRequest(getReportStats);
         const { data } = statsResponse;
 
-        this.stats = data;
+        this.stats.general = data.general;
+
+        if (data.personal) {
+          this.stats.personal = data.personal;
+        }
       } catch (error) {
         // nothing
       }
