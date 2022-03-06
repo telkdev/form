@@ -131,7 +131,7 @@ export default {
 
       if (!user) {
         this.handleLoggerMessage({
-          message: "Channels API error",
+          message: this.$t("error-with-auth-api"),
           type: "error",
           date: new Date(),
         });

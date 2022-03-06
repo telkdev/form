@@ -13,7 +13,7 @@
 export default {
   name: "LocaleChanger",
   data() {
-    return { langs: ["en", "uk"] };
+    return { langs: ["uk", "en"] };
   },
 };
 </script>

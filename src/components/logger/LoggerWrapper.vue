@@ -1,6 +1,6 @@
 <template>
   <div class="logger-wrapper">
-    <h2 class="logger-main_title">Message Logger:</h2>
+    <h2 class="logger-main_title">{{ $t("message-logger") }}:</h2>
     <ul
       v-if="loggerMessageArray && loggerMessageArray.length"
       class="logger-list"
@@ -24,7 +24,7 @@
       </li>
     </ul>
     <h3 v-else class="logger-description">
-      Here will be messages after bot initialization...
+      {{ $t("logger-placeholder") }}
     </h3>
   </div>
 </template>

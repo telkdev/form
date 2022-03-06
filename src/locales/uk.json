@@ -1,4 +1,16 @@
 {
   "message": "кіт прівіт",
-  "sign-up": "Зареєструватися"
+  "sign-up": "Зареєструватися",
+  "stopped-by-error-series": "Зупинено через серію помилок",
+  "reporting-stopped": "Репортування зупинено",
+  "error-with-channels-api": "Помилка з API каналів",
+  "couldnt-launch-without-connection": "Неможливо запустити без з'єднання",
+  "reporting-launched": "Репортування розпочато",
+  "reporting-stopping": "Репортування зупиняється...",
+  "connected": "З'єднано",
+  "connecting": "З'єднання...",
+  "enter-telegram-code": "Введіть код надісланий в Telegram",
+  "message-logger":"Логер Повідомлень",
+  "logger-placeholder":"Тут будуть повідомлення після ініціалізації бота..."
+
 }

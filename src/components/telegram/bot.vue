@@ -17,6 +17,7 @@ export default {
       connected: null,
       launched: null,
       verificationCode: null,
+      errorCounter: 0,
     };
   },
   computed: {},
@@ -49,7 +50,7 @@ export default {
     },
 
     async initializeConnection() {
-      this.sendMessage("Connecting...", "warn");
+      this.sendMessage(this.$t("connecting"), "warn");
 
       const { apiId, apiHash } = this;
       let sessionString = this.getSession();
@@ -68,7 +69,7 @@ export default {
       await this.client.start({
         phoneNumber: this.phoneNumber,
         phoneCode: async () => {
-          this.verificationCode = await prompt("Enter code sent by Telegram");
+          this.verificationCode = await prompt(this.$t("enter-telegram-code"));
 
           return this.verificationCode;
         },
@@ -80,7 +81,7 @@ export default {
         },
       });
 
-      this.sendMessage("Connected", "warn");
+      this.sendMessage(this.$t("connected"), "warn");
 
       this.setSession(this.client.session.save());
 
@@ -189,15 +190,18 @@ export default {
     },
 
     async stopReporting() {
-      this.sendMessage("Stopping reporting...", "warn");
+      this.sendMessage(this.$t("reporting-stopping"), "warn");
       this.launched = false;
     },
 
     async runReporting() {
-      this.sendMessage("Reporting launched", "warn");
+      this.sendMessage(this.$t("reporting-launched"), "warn");
 
       if (!this.connected) {
-        return this.sendMessage("Couldn't launch without connection", "error");
+        return this.sendMessage(
+          this.$t("couldnt-launch-without-connection"),
+          "error"
+        );
       }
 
       this.launched = true;
@@ -205,17 +209,16 @@ export default {
       const channelsResponse = await getChannels({});
 
       if (!channelsResponse) {
-        this.sendMessage("Error with channels API", "error");
+        this.sendMessage(this.$t("error-with-channels-api"), "error");
         this.disconnect();
         return;
       }
 
       const { data: telegramChannels } = channelsResponse;
-
       for (let i = 0; i < telegramChannels.length; i += 1) {
         try {
           if (!this.launched) {
-            this.sendMessage("Reporting stopped", "warn");
+            this.sendMessage(this.$t("reporting-stopped"), "warn");
 
             /** exit */
             return;
@@ -225,8 +228,16 @@ export default {
 
           await this.processChannel(channel.name);
         } catch (err) {
+          this.errorCounter += 1;
+
           console.error(err);
           this.sendMessage(err.message, "error");
+
+          if ((this.errorCounter += 5)) {
+            this.sendMessage(this.$t("stopped-by-error-series"), "error");
+            this.errorCounter = 0;
+            this.stopReporting();
+          }
         }
       }
     },

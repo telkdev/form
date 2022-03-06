@@ -1,4 +1,16 @@
 {
   "message": "hello i18n !!",
-  "sign-up": "Sign Up"
+  "sign-up": "Sign Up",
+  "stopped-by-error-series": "Stopped by error series",
+  "reporting-stopped": "Reporting stopped",
+  "error-with-channels-api": "Error with channels API",
+  "error-with-auth-api": "Error with auth API",
+  "couldnt-launch-without-connection": "Couldn't launch without connection",
+  "reporting-launched": "Reporting launched",
+  "reporting-stopping": "Stopping reporting...",
+  "connected": "Connected",
+  "connecting": "Connecting...",
+  "enter-telegram-code": "Enter code sent by Telegram",
+  "message-logger":"Message Logger",
+  "logger-placeholder":"Here will be messages after bot initialization..."
 }
