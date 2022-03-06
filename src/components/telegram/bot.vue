@@ -23,16 +23,10 @@ export default {
   computed: {},
 
   async mounted() {
-    try {
-      await this.initializeConnection();
+    await this.initializeConnection();
 
+    if (this.connected) {
       await this.runReporting();
-    } catch (err) {
-      this.sendMessage(err.message, "error");
-
-      this.disconnect();
-
-      console.error(err);
     }
   },
 
@@ -50,44 +44,51 @@ export default {
     },
 
     async initializeConnection() {
-      this.sendMessage(this.$t("connecting"), "warn");
+      try {
+        this.sendMessage(this.$t("connecting"), "warn");
 
-      const { apiId, apiHash } = this;
-      let sessionString = this.getSession();
+        const { apiId, apiHash } = this;
+        let sessionString = this.getSession();
 
-      if (!sessionString) {
-        sessionString = "";
+        if (!sessionString) {
+          sessionString = "";
+        }
+
+        const session = new StringSession(sessionString);
+
+        this.client = new TelegramClient(session, +apiId, apiHash, {
+          connectionRetries: 5,
+          useWSS: true,
+        });
+
+        await this.client.start({
+          phoneNumber: this.phoneNumber,
+          phoneCode: async () => {
+            this.verificationCode = await prompt(
+              this.$t("enter-telegram-code")
+            );
+
+            return this.verificationCode;
+          },
+          onError: (err) => {
+            this.sendMessage(err.message, "error");
+            throw err;
+          },
+        });
+
+        this.sendMessage(this.$t("connected"), "warn");
+
+        this.setSession(this.client.session.save());
+
+        await this.client.connect();
+
+        this.connected = true;
+      } catch (err) {
+        this.sendMessage(err?.message || err, "error");
+        this.sendMessage(this.$t("unable-to-connect-try-reconnect"), "warn");
+
+        this.disconnect();
       }
-
-      const session = new StringSession(sessionString);
-
-      this.client = new TelegramClient(session, +apiId, apiHash, {
-        connectionRetries: 5,
-        useWSS: true,
-      });
-
-      await this.client.start({
-        phoneNumber: this.phoneNumber,
-        phoneCode: async () => {
-          this.verificationCode = await prompt(this.$t("enter-telegram-code"));
-
-          return this.verificationCode;
-        },
-        onError: (err) => {
-          this.sendMessage(err.message, "error");
-
-          console.log(err);
-          throw err;
-        },
-      });
-
-      this.sendMessage(this.$t("connected"), "warn");
-
-      this.setSession(this.client.session.save());
-
-      await this.client.connect();
-
-      this.connected = true;
     },
 
     disconnect() {
@@ -99,20 +100,20 @@ export default {
 
     getRandomReason() {
       const first = [
-        "Propaganda of the war in Ukraine. ",
-        "Propaganda of the murder of Ukrainians and Ukrainian soldiers. ",
-        "Dissemination of military personal data. ",
-        "The channel undermines the integrity of the Ukrainian state. ",
-        "Spreading fake news, misleading people. ",
-        "Propaganda of violence and russian aggression. ",
-        "Dangerous fake news from russian propagandist against Ukraine. ",
+        this.$t("reason-1-1"),
+        this.$t("reason-1-2"),
+        this.$t("reason-1-3"),
+        this.$t("reason-1-4"),
+        this.$t("reason-1-5"),
+        this.$t("reason-1-6"),
+        this.$t("reason-1-7"),
       ];
       const second = [
-        "Block the channel! ",
-        "Block it as soon as possible! ",
-        "Ban this channel please ",
-        "It would be helpful if you ban this channel ",
-        "This channel is violating Telegram rules and must be stopped ",
+        this.$t("reason-2-1"),
+        this.$t("reason-2-2"),
+        this.$t("reason-2-3"),
+        this.$t("reason-2-4"),
+        this.$t("reason-2-5"),
       ];
 
       return randomEl(first) + randomEl(second);
@@ -174,13 +175,12 @@ export default {
         await saveReported({ name: channelName });
 
         this.sendMessage(
-          `[${channelName}] was sent report: ${message}`,
+          `[${channelName}] ${this.$t("sent-report")}: ${message}`,
           "info"
         );
 
         await this.wait(randomSec);
       } catch (err) {
-        console.error(err);
         this.sendMessage(err.message, "error");
       }
     },
@@ -230,7 +230,6 @@ export default {
         } catch (err) {
           this.errorCounter += 1;
 
-          console.error(err);
           this.sendMessage(err.message, "error");
 
           if ((this.errorCounter += 5)) {
