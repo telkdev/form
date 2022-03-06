@@ -14,9 +14,8 @@
             alt=""
             aria-hidden="true"
           />
-
-          front-end</t-button
-        >
+          {{ $t("front-end") }}
+        </t-button>
       </li>
       <li>
         <t-button
@@ -30,8 +29,7 @@
             alt=""
             aria-hidden="true"
           />
-
-          back-end
+          {{ $t("back-end") }}
         </t-button>
       </li>
     </ul>
