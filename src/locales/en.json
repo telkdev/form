@@ -64,5 +64,8 @@
   "flood-error": "Telegram was detected flood. Try to use bot after {date}",
   "check-instructions-first": "Please, check instructions first",
   "main-page": "Main page",
-  "about-page": "About"
+  "about-page": "About",
+  "stats-requests": "Request Statistics",
+  "stats-general": "General",
+  "stats-personal": "Personal"
 }

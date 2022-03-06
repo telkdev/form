@@ -64,5 +64,8 @@
   "flood-error": "Telegram'ом був виявлений флуд. Спробуйте використовувати бота після {date}",
   "check-instructions-first": "Ознайомтесь з інструкцією",
   "main-page": "Головна сторінка",
-  "about-page": "Про сервіс"
+  "about-page": "Про сервіс",
+  "stats-requests": "Статистика запитів",
+  "stats-general": "Загально",
+  "stats-personal": "Персонально"
 }

@@ -23,3 +23,10 @@ export async function saveReported({ name }) {
     data: { name },
   });
 }
+
+export async function getReportStats() {
+  return httpRequest({
+    url: "telegram/report/stats",
+    method: "GET",
+  });
+}
