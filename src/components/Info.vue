@@ -11,7 +11,7 @@
         >
           <img
             :src="require('@/assets/github.svg')"
-            alt=""
+            alt="github icon"
             aria-hidden="true"
           />
           {{ $t("front-end") }}
@@ -26,7 +26,7 @@
         >
           <img
             :src="require('@/assets/github.svg')"
-            alt=""
+            alt="github icon"
             aria-hidden="true"
           />
           {{ $t("back-end") }}

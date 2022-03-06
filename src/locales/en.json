@@ -71,5 +71,6 @@
   "back-end": "back-end",
   "front-end": "front-end",
   "about-what-for": "What is it and what for?",
-  "about-description": "This application is designed to block telegram channels of Russian propaganda. The application is configurable in a few steps and is completely in the browser, ie does not require instances of additional programs. After setting up completely in automatic mode, complaints about telegram channels will be sent, the list of channels will be updated automatically. All code is open, you can read it by following the links in the footer. Support channel in the Telegram <b><a target='_blank' href='https://t.me/+OXcZiJ-MSJw1ZTQy'>link</a> </b>. We are open to collaboration with other services."
+  "about-description": "This application is designed to block telegram channels of Russian propaganda. The application is configurable in a few steps and is completely in the browser, ie does not require instances of additional programs. After setting up completely in automatic mode, complaints about telegram channels will be sent, the list of channels will be updated automatically. All code is open, you can read it by following the links in the footer. Support channel in the Telegram <b><a class='{linkClass}'target='_blank' href='https://t.me/+OXcZiJ-MSJw1ZTQy'>link</a> </b>. We are open to collaboration with other services.",
+  "start-init-bot": "Start initialization"
 }
