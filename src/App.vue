@@ -7,12 +7,12 @@
         </div>
         <div class="flex items-center gap-4 md:gap-7 flex-wrap">
           <nav class="flex items-center gap-3">
-            <router-link to="/" class="text-2xl hover:text-green-600"
-              >Home</router-link
-            >
-            <router-link to="/about" class="text-2xl hover:text-green-600"
-              >About</router-link
-            >
+            <router-link to="/" class="text-2xl hover:text-green-600">{{
+              $t("main-page")
+            }}</router-link>
+            <router-link to="/about" class="text-2xl hover:text-green-600">{{
+              $t("about-page")
+            }}</router-link>
           </nav>
           <locale-changer />
         </div>

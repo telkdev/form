@@ -61,5 +61,8 @@
   "error-auth-wrong-password": "Error: wrong password!",
   "error-unauthorized": "Error: not authorized!",
   "privacy-note-1": "* Privacy: All sensitive data stored on your device and <br /> not sent to any other services, except phone. For details read info page. <a href='/details'>details</a>",
-  "flood-error":"Telegram was detected flood. Try to use bot after {date}"
+  "flood-error": "Telegram was detected flood. Try to use bot after {date}",
+  "check-instructions-first": "Please, check instructions first",
+  "main-page": "Main page",
+  "about-page": "About"
 }

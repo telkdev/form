@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <div class="container p-3">
-      <h1>Please, check instructions first</h1>
+      <h1>{{ $t("check-instructions-first") }}</h1>
 
       <h2 class="text-3xl font-bold mb-2">{{ $t("instructions-title") }}</h2>
       <h3 class="text-xl mb-3">
