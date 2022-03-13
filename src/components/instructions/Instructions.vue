@@ -1,13 +1,13 @@
 <template>
   <div>
     <div>
-      <t-button @click="toggleInstructionsVisibility()">
+      <button @click="toggleInstructionsVisibility()" class="text-blue-500 hover:text-blue-800 hover:underline">
         {{ toggleVisibilityButtonText }}
-      </t-button>
+      </button>
     </div>
 
     <t-modal v-model="isShow" class="p-2 md:p-3 xl:p-4">
-      <locale-changer class="mb-2" />
+      <locale-changer class="mb-2 " :title-class="'text-gray-700'" />
 
       <instructions-content />
     </t-modal>

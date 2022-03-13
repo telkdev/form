@@ -15,7 +15,7 @@ module.exports = defineConfig({
   pluginOptions: {
     i18n: {
       locale: 'en',
-      fallbackLocale: 'uk',
+      fallbackLocale: 'ua',
       localeDir: 'locales',
       enableInSFC: false,
       enableBridge: false

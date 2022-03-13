@@ -1,26 +1,28 @@
 <template>
-  <div class="form-actions">
-    <cancel-button
-      @handle-cancel="handleCancel()"
-      :isDisabled="isFirstStep"
-    />
+  <div class="flex items-center flex-wrap justify-between gap-6">
+    <div class="flex items-center gap-6">
+      <cancel-button
+        @handle-cancel="handleCancel()"
+        :isDisabled="isFirstStep"
+      />
 
-    <submit-button
-      @handle-submit="handleSubmit()"
-      :isDisabled="isInvalid"
-    />
+      <submit-button @handle-submit="handleSubmit()" :isDisabled="isInvalid" />
+    </div>
+    <instructions-view />
   </div>
 </template>
 
 <script>
 import SubmitButton from "@/components/buttons/SubmitButton.vue";
 import CancelButton from "@/components/buttons/CancelButton.vue";
+import InstructionsView from "@/components/instructions/Instructions.vue";
 
 export default {
   name: "ButtonsWrapper",
   components: {
     SubmitButton,
     CancelButton,
+    InstructionsView,
   },
   props: {
     isFirstStep: {

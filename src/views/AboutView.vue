@@ -40,7 +40,7 @@ export default {
 </script>
 
 // TODO: FIX THIS;
-<style scoped>
+<style>
 .prose {
   max-width: 70vw !important;
 }

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="prose prose-zin lg:prose-xl">
     <h2 class="">{{ $t("instructions-title") }}</h2>
     <h3 class="">
       {{ $t("instructions-description") }}
@@ -26,7 +26,7 @@
       <li>{{ $t("instructions-step-6") }}</li>
     </ol>
 
-    <p class="">
+    <p class="text-red-600">
       {{ $t("instructions-warning") }}
     </p>
   </div>
