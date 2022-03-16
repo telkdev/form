@@ -16,11 +16,21 @@ export default {
   data() {
     return {
       stats: { general: 0, personal: 0 },
+      interval: null,
     };
   },
   async mounted() {
-    setInterval(this.getStats(), 30000);
+    this.getStats();
+
+    this.interval = setInterval(() => {
+      this.getStats();
+    }, 30000);
   },
+  
+  beforeDestroy() {
+    window.clearInterval(this.interval);
+  },
+
   methods: {
     handleLoggerMessage(message, type) {
       this.$emit("send-logger-message", {
