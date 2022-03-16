@@ -9,7 +9,7 @@
       @send-api-data="setApiData"
     />
 
-    <login-form
+    <phone-number-form
       v-show="currentStep === 1"
       :isFirstStep="isFirstStep"
       :isLastStep="isLastStep"
@@ -43,12 +43,7 @@ import { authRequest } from "@/api/endpoints";
 
 export default {
   name: "FormWrapper",
-  components: {
-    // TODO: rename
-    "login-form": PhoneNumberForm,
-    ApiDataForm,
-    LauncherView,
-  },
+  components: { PhoneNumberForm, ApiDataForm, LauncherView },
 
   mounted() {
     if (this.tgSession && this.accessToken) {
@@ -162,7 +157,7 @@ export default {
 };
 </script>
 
-<style>
+<!-- <style>
 .form-wrapper a {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -290,4 +285,4 @@ input {
   background: grey;
   cursor: not-allowed;
 }
-</style>
+</style> -->

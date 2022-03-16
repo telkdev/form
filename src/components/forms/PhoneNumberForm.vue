@@ -6,31 +6,35 @@
     v-slot="{ invalid }"
     @submit.prevent
   >
-    <h1>{{ $t("sign-up") }}</h1>
+    <h1 class="mb-10 text-gray-700 text-sm font-medium">{{ $t("sign-up") }}</h1>
     <ValidationProvider
-      class="form-field"
+      class="mb-4"
       tag="div"
       key="phoneNumber"
       name="phoneNumber"
       v-slot="{ errors }"
       rules="required|phone"
     >
-      <label for="phoneNumber">{{ $t("enter-phone-number") }}</label>
+      <label
+        for="phoneNumber"
+        v-html="$t('enter-phone-number')"
+        class="block text-gray-700 text-sm font-bold mb-2"
+      ></label>
       <input
         v-model="phoneNumber"
         type="text"
-        class="form-control input-large"
+        class="w-full rounded-lg border border-gray-400 text-gray-700 placeholder:text-gray-400 text-base py-3 focus:border-blue-500"
         id="phoneNumber"
         placeholder="+380998877118"
         autocomplete="off"
       />
 
-      <p v-if="errors.length" class="error">
+      <p v-if="errors.length" class="text-xs text-red-500 mt-1 block">
         {{ errors[0] }}
       </p>
     </ValidationProvider>
     <ValidationProvider
-      class="form-field"
+      class="mb-10"
       tag="div"
       eager
       key="password"
@@ -38,17 +42,21 @@
       v-slot="{ errors }"
       rules="required"
     >
-      <label for="password">{{ $t("enter-password") }}</label>
+      <label
+        for="password"
+        class="block text-gray-700 text-sm font-bold mb-2"
+        v-html="$t('enter-password')"
+      ></label>
       <input
         v-model="password"
         type="password"
-        class="form-control input-large"
+        class="w-full rounded-lg border border-gray-400 text-gray-700 placeholder:text-gray-400 text-base py-3 focus:border-blue-500"
         id="password"
         :placeholder="$t('placeholder-password')"
         autocomplete="off"
       />
 
-      <p v-if="errors.length" class="error">
+      <p v-if="errors.length" class="text-xs text-red-500 mt-1 block">
         {{ errors[0] }}
       </p>
     </ValidationProvider>

@@ -1,18 +1,16 @@
 <template>
   <main class="flex-grow flex flex-col h-full">
-    <div class="container p-4 flex-grow flex flex-col justify-between gap-4">
-      <div class="flex flex-col md:flex-row gap-4 justify-between">
+    <div
+      class="container p-4 md:p-6 flex-grow flex flex-col justify-between gap-4"
+    >
+      <div class="flex flex-col md:flex-row gap-4 xl:gap-36 justify-between">
         <form-wrapper
           @send-logger-message="handleLoggerMessage"
           class="flex-grow"
         />
-        <stats @send-logger-message="handleLoggerMessage" class="md:pl-4"/>
+        <stats @send-logger-message="handleLoggerMessage" class="md:pl-4" />
       </div>
-      <div class="flex justify-between flex-wrap items-center gap-4">
-        <instructions-view class="page-instructions-wrapper" />
-
-        <info-view class="page-info-wrapper" />
-      </div>
+      <info-view />
     </div>
 
     <logger-wrapper
@@ -26,7 +24,6 @@ import FormWrapper from "@/components/forms/FormWrapper.vue";
 import LoggerWrapper from "@/components/logger/LoggerWrapper.vue";
 import Stats from "@/components/stats/Stats.vue";
 import InfoView from "@/components/Info.vue";
-import InstructionsView from "@/components/instructions/Instructions.vue";
 
 export default {
   name: "HomeView",
@@ -34,7 +31,6 @@ export default {
     InfoView,
     FormWrapper,
     LoggerWrapper,
-    InstructionsView,
     Stats,
   },
   data() {

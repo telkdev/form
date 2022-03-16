@@ -1,10 +1,19 @@
 <template>
-  <div>
-    <h3>{{ $t("stats-requests") }}:</h3>
-    <span> {{ $t("stats-general") }} - {{ stats.general }} </span>
-    <span v-if="stats.personal">
-      {{ $t("stats-personal") }} - {{ stats.personal }}
-    </span>
+  <div class="py-10 pr-3 xl:pr-10 xl:py-20 flex flex-col gap-2 shrink-0">
+    <h3 class="text-lg md:text-2xl font-medium text-gray-700 uppercase">
+      {{ $t("stats-requests") }}:
+    </h3>
+    <div class="flex flex-col gap-1">
+      <p class="font-medium text-gray-700 text-base md:text-lg uppercase">
+        {{ $t("stats-general") }} - <span class="text-lg md:text-2xl font-bold text-blue-500">{{ stats.general }}</span>
+      </p>
+      <p
+        v-if="stats.personal"
+        class="font-medium text-gray-700 text-base md:text-lg uppercase"
+      >
+        {{ $t("stats-personal") }} - <span class="text-lg md:text-2xl font-bold text-blue-500">{{ stats.personal }}</span>
+      </p>
+    </div>
   </div>
 </template>
 

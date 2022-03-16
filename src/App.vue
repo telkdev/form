@@ -1,20 +1,26 @@
 <template>
   <div id="app" class="flex flex-col">
-    <header class="bg-gray-500">
-      <div class="container p-4 flex items-center justify-between gap-4">
+    <header class="bg-blue-500">
+      <div
+        class="container p-4 md:py-5 flex flex-wrap items-center justify-between gap-4"
+      >
         <div class="">
-          <span class="text-black text-4xl">Korabel</span>
+          <span class="uppercase text-white text-4xl font-bold">Korabel</span>
         </div>
-        <div class="flex items-center gap-4 md:gap-7 flex-wrap">
-          <nav class="flex items-center gap-3">
-            <router-link to="/" class="text-2xl hover:text-green-600">{{
-              $t("main-page")
-            }}</router-link>
-            <router-link to="/about" class="text-2xl hover:text-green-600">{{
-              $t("about-page")
-            }}</router-link>
+        <div class="flex items-center gap-3 md:gap-7 xl:gap-10 flex-wrap">
+          <nav class="flex items-center gap-3 md:gap-7 xl:gap-10">
+            <router-link
+              to="/"
+              class="text-sm uppercase text-white hover:text-blue-300 font-bold"
+              >{{ $t("main-page") }}</router-link
+            >
+            <router-link
+              to="/about"
+              class="text-sm uppercase text-white hover:text-blue-300 font-bold"
+              >{{ $t("about-page") }}</router-link
+            >
           </nav>
-          <locale-changer />
+          <locale-changer :title-class="'text-white'"/>
         </div>
       </div>
     </header>
